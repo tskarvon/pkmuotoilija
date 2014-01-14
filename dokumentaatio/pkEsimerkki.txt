@@ -1,0 +1,118 @@
+Tämä tiedosto sisältää esimerkin ohjelmalle annetusta pöytäkirjasta ja tästä muotoillusta pöytäkirjasta (jonka ulkoasu luonnollisesti riippuu käyttäjän tekemistä valinnoista).
+
+--------------------------------------------------
+Alkuperäinen pöytäkirja:
+--------------------------------------------------
+
+Järjestö X:n hallituksen kokous 2/2013
+
+Paikka: Matlu-klusterin siivouskomero, Domus Gaudium
+Aika: tiistai 30.4. klo 20.00
+
+Läsnä:
+
+Hallituksen jäsenet:
+
+Urho Karhu (puheenjohtaja)
+Toni Karvonen (sihteeri)
+Christina Regina
+
+Muut:
+
+Jurri Humala (saapui kohdan 3 aikana)
+Vappu Aarre
+
+1. Kokouksen avaus
+
+Kokous. On.
+
+2. Kokouksen laillisuus ja päätösvaltaisuus
+
+Joo.
+
+3. Tulevat tapahtumat
+
+3.1. Vappu
+
+On.
+
+3.2. Vapun jatkot
+
+Vapulla tulee olemaan jatkot vapun päätyttyä. Tällöin juhlitaan vappua. Mukana on vappua. Vappu. Vappu. Orava.
+
+4. Muut esille tulevat asiat
+
+Asioita ei tullut esille.
+
+5. Kokouksen päätös
+
+Kokous päätettiin.
+
+Liitteet:
+Kokouksen esityslista
+Vapunviettosuunnitelma
+
+--------------------------------------------------
+Muotoiltu pöytäkirja:
+--------------------------------------------------
+
+Järjestö X:n hallituksen kokous 2/2013                               PÖYTÄKIRJA
+
+Paikka: Matlu-klusterin siivouskomero, Domus Gaudium
+Aika:   tiistai 30.4. klo 20.00
+
+Läsnä:
+
+  Hallituksen jäsenet:
+
+    Urho Karhu (puheenjohtaja)
+    Toni Karvonen (sihteeri)
+    Christina Regina
+
+  Muut:
+
+    Jurri Humala (saapui kohdan 3 aikana)
+    Vappu Aarre
+
+1. Kokouksen avaus
+
+   Kokous. On.
+
+2. Kokouksen laillisuus ja päätösvaltaisuus
+
+   Joo.
+
+3. Tulevat tapahtumat
+
+   3.1. Vappu
+
+        On.
+
+   3.2. Vapun jatkot
+
+        Vapulla tulee olemaan jatkot vapun päätyttyä. Tällöin juhlitaan vappua.
+        Mukana on vappua. Vappu. Vappu. Orava.
+
+4. Muut esille tulevat asiat
+
+   Asioita ei tullut esille.
+
+5. Kokouksen päätös
+
+   Kokous päätettiin.
+
+LIITTEET:
+Liite 1: Kokouksen esityslista
+Liite 2: Vapunviettosuunnitelma
+
+
+Hyväksytty kokouksessa 3/2013
+
+
+
+
+   ___________________________________    ___________________________________
+   Urho Karhu                             Toni Karvonen
+   puheenjohtaja                          sihteeri
+
+
