@@ -1,4 +1,4 @@
-package com.pkmuotoilija.pkmuotoilija;
+package pkmuotoilija;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,3 +1,6 @@
 Tuntikirjanpito:
 
 14.1., ti:	githubin ja netbeans-projektin luominen, aihemäärittely		2h
+18.1., la:	luokan PKlukija luonnostelua					2h
+21.1., ti:	luokan PKlukija kirjoittaminen					4h
+22.1., ke:	PKlukija, Rivi, testeihin hajoamista				5h
