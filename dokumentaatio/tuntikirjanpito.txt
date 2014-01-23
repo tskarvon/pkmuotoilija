@@ -4,3 +4,4 @@ Tuntikirjanpito:
 18.1., la:	luokan PKlukija luonnostelua					2h
 21.1., ti:	luokan PKlukija kirjoittaminen					4h
 22.1., ke:	PKlukija, Rivi, testeihin hajoamista				5h
+23.1., to:	luokkakaavio, testejä, PIT					1h
