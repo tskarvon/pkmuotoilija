@@ -6,4 +6,9 @@ public class LasnaRivi extends Rivi {
         super(rivinSisalto);
     }
     
+    @Override
+    public void formatoiRivi(int leveys) {
+        this.sisalto = "Läsnä:";
+    }
+    
 }

@@ -27,6 +27,10 @@ public class KayttajanSyotteet {
         
     }
     
+    public void setLeveys(int leveys) {
+        this.leveys = leveys;
+    }
+    
     public boolean getSailytaOmaRivitys() {
         
         return this.sailytaOmaRivitys;

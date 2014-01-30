@@ -45,9 +45,11 @@
                 <configuration>
                     <targetClasses>
                         <param>pkmuotoilija.domain.*</param>
+                        <param>pkmuotoilija.domain.rivit.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>pkmuotoilija.domain.*</param>
+                        <param>pkmuotoilija.domain.rivit.*</param>
                     </targetTests>
                 </configuration>
             </plugin>

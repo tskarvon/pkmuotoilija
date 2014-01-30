@@ -5,3 +5,5 @@ Tuntikirjanpito:
 21.1., ti:	luokan PKlukija kirjoittaminen					4h
 22.1., ke:	PKlukija, Rivi, testeihin hajoamista				5h
 23.1., to:	luokkakaavio, testejä, PIT					1h
+29.1., ke:	Rivi-luokan aliluokkia ja testejä, ei vielmä valmista		4h
+30.1., to:	päivitetty luokkakaavio, pit					1h

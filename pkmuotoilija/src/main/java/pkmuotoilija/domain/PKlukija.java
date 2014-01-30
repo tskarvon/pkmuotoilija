@@ -23,6 +23,7 @@ public class PKlukija {
 
     // Alkuperäinen pöytäkirja, jota halutaan muokata.
     private final File alkuPK;
+    private RivitettyPK rivitetty;
 
     // Totuusarvoja, joiden avulla pidetään kirjaa siitä, onko tietyt kohdat
     // jo talletettu RivitettyPK-luokan ilmentymään.
@@ -74,7 +75,7 @@ public class PKlukija {
     public RivitettyPK tunnistaRivit() throws FileNotFoundException {
 
         tunnistaViimeinenKohta(new Scanner(this.alkuPK));
-        RivitettyPK rivitetty = new RivitettyPK(this.suurinYlakohta, this.suurinAlakohta);
+        this.rivitetty = new RivitettyPK(this.suurinYlakohta, this.suurinAlakohta);
 
         // Käydään Scannerilla koko pöytäkirja läpi.
         Scanner lukija = new Scanner(this.alkuPK);
@@ -99,7 +100,7 @@ public class PKlukija {
             }
             if (tunnistaAlakohta(rivi, this.viimeisinAlakohta, this.suurinYlakohta)) {
                 this.viimeisinAlakohta++;
-                // Suurin alakoht ei välttämättä ole viimeisenä oleva alakohta.
+                // Suurin alakohta ei välttämättä ole viimeisenä oleva alakohta.
                 this.suurinAlakohta = Math.max(this.suurinAlakohta, this.viimeisinAlakohta);
             }
         }
@@ -141,6 +142,7 @@ public class PKlukija {
 
         } else if (tunnistaPaikka(trimRivi)) {
             this.paikkaOllut = true;
+            this.rivitetty.setTrueOnkoPaikka();
             return new PaikkaRivi(rivi);
 
         } else if (tunnistaLasna(trimRivi)) {
@@ -148,6 +150,7 @@ public class PKlukija {
             return new LasnaRivi(rivi);
 
         } else if (tunnistaAlalasna(trimRivi)) {
+            this.rivitetty.setTrueOnkoAlalasna();
             return new AlalasnaRivi(rivi);
 
         } else if (tunnistaOsallistuja(trimRivi)) {
