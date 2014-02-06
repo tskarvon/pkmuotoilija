@@ -9,9 +9,9 @@ public class PaikkaRivi extends Rivi {
     }
     
     @Override
-    public void formatoiRivi(int leveys) {
+    public void formatoiRivi(PKtiedot tiedot) {
         this.sisalto = "Paikka: " + this.sisalto.substring(this.sisalto.indexOf(" ")).trim();
-        hajotaRivi(true, leveys, 8);
+        hajotaRivi(true, tiedot.getLeveys(), 8);
     }
     
 }

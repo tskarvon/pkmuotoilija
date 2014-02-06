@@ -6,42 +6,50 @@ import java.util.Scanner;
 
 import pkmuotoilija.domain.rivit.*;
 
-/*
- Tämän luokan tehtävänä on määrittää syötetyn pöytäkirjan kunkin rivin tyyppi. Luokka
- luo RivitettyPK-luokan ilmentymän, johon syötetty pöytäkirja tallennetaan rivi
- kerrallaan siten, että jokaisesta rivistä luodaan Rivi-luokan sopivan
- aliluokan ilmentymä.
-
- Oikean aliluokan määrittämiseksi kullekin riville käytetään monimutkaista ehto-
- lauseiden rakennelmaa, joka perustuu viime kädessä tiettyjen avainsanojen ja 
- pöytäkirjan kohtien aloittavien numeroiden tunnistamiseen.
-
- Varsinaisen muotoilun hoitavat PKkirjoitta-luokan aliluokat käyttäen Rivi-luokan
- aliluokista riippuvaisi hajotus- ja muotoilumetodeja.
- */
 public class PKlukija {
+    /**
+     * Tämän luokan tehtävänä on määrittää syötetyn pöytäkirjan kunkin rivin tyyppi.
+     * Luokka luo RivitettyPK-luokan ilmentymän, johon syötetty pöytäkirja tallennetaan rivi
+     * kerrallaan siten, että jokaisesta rivistä luodaan Rivi-luokan sopivan aliluokan ilmentymä.
+     * 
+     * Oikean aliluokan määrittämiseksi kullekin riville käytetään monimutkaista ehto-
+     * lauseiden rakennelmaa, joka perustuu viime kädessä tiettyjen avainsanojen ja 
+     * pöytäkirjan kohtien aloittavien numeroiden tunnistamiseen.
+     * 
+     * @param alkuPK alkuperäinen pöytäkirja, joka halutaan muotoilla
+     * 
+     */
 
-    // Alkuperäinen pöytäkirja, jota halutaan muokata.
     private final File alkuPK;
-    private RivitettyPK rivitetty;
 
-    // Totuusarvoja, joiden avulla pidetään kirjaa siitä, onko tietyt kohdat
-    // jo talletettu RivitettyPK-luokan ilmentymään.
+    /**
+     * Totuusarvoja, joilla pidetään, huoli, etteivät tietyt rivityypit tule
+     * tallennetuiksi useaan kertaan.
+     */
+    
     private boolean otsikkoOllut;
     private boolean aikaOllut;
     private boolean paikkaOllut;
     private boolean lasnaOllut;
+    private boolean alalasnaOllut;
     private boolean liitteetOllut;
+    
+    /**
+     * Juoksevia laskureita pöytäkirjan kohtien ja liitteiden numeroinnista. 
+     * Näiden avulla varmistetaan, ettei kohdiksi lueta vahingossa mitään ylimääräistä
+     * kuten päivämäärillä alkavia rivejä.
+     * 
+     */
 
-    // Juoksevia laskureita pöytäkirjan kohtien numeroinnista. Näiden avulla
-    // varmistetaan, ettei kohdiksi lueta vahingossa mitään ylimääräistä
-    // kuten päivämäärällä alkavia rivejä.
     private int ylakohta;
     private int alakohta;
-
-    // Käytetään laskemaan suurimman kohdan ja alakohdan numerot. PKkirjoittaja
-    // tarvitsee tätä tietoa oikeanlaisen sisennyksen takaamiseksi. Lisäksi
-    // varmistutaan, että liiteluettelo tulee oikeaan paikkaan.
+    private int liitenumero;
+    
+    /**
+     * Laskureita, joiden avulla selvitetään suurimmat kohdan ja alakohdan numerot.
+     * Näitä tietoja tarvitaan halutun sisennyksen aikaansaamiseen.
+     */
+    
     private int suurinYlakohta;
     private int suurinAlakohta;
     private int viimeisinAlakohta;
@@ -66,16 +74,25 @@ public class PKlukija {
         this.viimeisinAlakohta = 0;
 
     }
-
-    // Tämä on luokan päämetodi, jonka kautta jokainen luokan metodi tulee
-    // kutsutuksi. Käy syötetyn pöytäkirjan lävitse ja kutsuu jokaisen rivin
-    // kohdalla metodeita, joiden kautta rivien tyyppi päästään tunnistamaan.
-    // Olemattoman tiedoston antama poikkeus käsitellään korkeammalla
-    // luokkahierarkiassa jo käyttäjän antaessa tiedostonimeä.
+    
+    /**
+     * Metodi käy läpi PKlukijan konstruktorille annetun tekstitiedoston ja 
+     * tunnistaa sen jokaisen rivin tyypin myöhemmin tapahtuvaa rivin tyypistä
+     * riippuvaista muotoilua varten. 
+     * 
+     * @return RivitettyPK-luokan ilmentymä, johon alkuperäisen pöytäkirjan
+     * rivit on tallennettu tyyppitietoineen. Mukana on myös näiden muotoiluun
+     * tarvittavaa tietoa PKtiedot-luokan ilmentymässä.
+     */
     public RivitettyPK tunnistaRivit() throws FileNotFoundException {
-
+        
         tunnistaViimeinenKohta(new Scanner(this.alkuPK));
-        this.rivitetty = new RivitettyPK(this.suurinYlakohta, this.suurinAlakohta);
+        PKtiedot tiedot = new PKtiedot();
+        
+        tiedot.setYlakohdanSisennys(this.suurinYlakohta / 10 + 1);
+        tiedot.setAlakohdanSisennys(this.suurinAlakohta / 10 + 1);
+        
+        RivitettyPK rivitetty = new RivitettyPK();
 
         // Käydään Scannerilla koko pöytäkirja läpi.
         Scanner lukija = new Scanner(this.alkuPK);
@@ -83,7 +100,13 @@ public class PKlukija {
             String rivi = lukija.nextLine();
             rivitetty.lisaaRivi(maaritaLisattavaRivi(rivi));
         }
-
+        
+        tiedot.setOnkoPaikka(this.paikkaOllut);
+        tiedot.setOnkoAlalasna(this.alalasnaOllut);
+        tiedot.setSuurinLiite(this.liitenumero);
+        
+        rivitetty.setTiedot(tiedot);
+        
         return rivitetty;
 
     }
@@ -142,7 +165,6 @@ public class PKlukija {
 
         } else if (tunnistaPaikka(trimRivi)) {
             this.paikkaOllut = true;
-            this.rivitetty.setTrueOnkoPaikka();
             return new PaikkaRivi(rivi);
 
         } else if (tunnistaLasna(trimRivi)) {
@@ -150,7 +172,7 @@ public class PKlukija {
             return new LasnaRivi(rivi);
 
         } else if (tunnistaAlalasna(trimRivi)) {
-            this.rivitetty.setTrueOnkoAlalasna();
+            this.alalasnaOllut = true;
             return new AlalasnaRivi(rivi);
 
         } else if (tunnistaOsallistuja(trimRivi)) {
@@ -178,21 +200,22 @@ public class PKlukija {
             return new YlakohtaOtsikkoRivi(rivi, this.ylakohta);
 
         } else if (tunnistaYlakohdanTeksti(trimRivi)) {
-            return new YlakohtaTekstiRivi(rivi, this.ylakohta);
+            return new YlakohtaTekstiRivi(rivi);
 
         } else if (tunnistaAlakohta(trimRivi, this.alakohta, this.ylakohta)) {
             this.alakohta++;
-            return new AlakohtaOtsikkoRivi(rivi, this.alakohta);
+            return new AlakohtaOtsikkoRivi(rivi, this.alakohta, this.ylakohta);
 
         } else if (tunnistaAlakohdanTeksti(trimRivi)) {
-            return new AlakohtaTekstiRivi(rivi, this.alakohta);
+            return new AlakohtaTekstiRivi(rivi);
 
         } else if (tunnistaLiiteOtsikko(trimRivi)) {
             this.liitteetOllut = true;
             return new LiiteOtsikkoRivi(rivi);
 
         } else if (tunnistaLiitteet()) {
-            return new LiiteRivi(rivi);
+            this.liitenumero++;
+            return new LiiteRivi(rivi, this.liitenumero);
             // Jos mikään ehdoista ei täyty, luodaan geneerinen Rivi-olio.
         } else {
             return new Rivi(rivi);

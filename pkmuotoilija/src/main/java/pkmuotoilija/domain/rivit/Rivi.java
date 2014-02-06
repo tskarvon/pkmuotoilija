@@ -1,5 +1,7 @@
 package pkmuotoilija.domain.rivit;
 
+import pkmuotoilija.domain.*;
+
 public class Rivi {
 
     protected String sisalto;
@@ -12,7 +14,7 @@ public class Rivi {
 
         return this.sisalto;
 
-    }
+    }    
 
     @Override
     public String toString() {
@@ -20,10 +22,10 @@ public class Rivi {
         return this.sisalto;
 
     }
-
     
-    public void formatoiRivi(int leveys) {
-
+    public void formatoiRivi(PKtiedot tiedot) {
+        this.sisalto = this.sisalto.trim();
+        hajotaRivi(false, tiedot.getLeveys(), 0);
     }
 
     public void hajotaRivi(boolean eiEkanRivinSisennysta, int leveys, int sis) {
@@ -50,7 +52,6 @@ public class Rivi {
                 eiEkanRivinSisennysta = false;
                 continue;
             }
-            System.out.println(this.sisalto);
             vikaValiEnnenKatkoa = katkottuRivi.lastIndexOf(" ", leveys - sis);
 
             if (katkottuRivi.length() <= leveys) {
@@ -60,7 +61,6 @@ public class Rivi {
             }
             this.sisalto = this.sisalto + valia(sis) + katkottuRivi.substring(0, vikaValiEnnenKatkoa) + "\n";
             katkottuRivi = katkottuRivi.substring(vikaValiEnnenKatkoa + 1);
-            System.out.println("TESTI");
         }
 
     }

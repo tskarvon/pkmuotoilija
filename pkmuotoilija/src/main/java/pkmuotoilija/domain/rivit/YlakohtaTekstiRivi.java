@@ -1,12 +1,19 @@
 package pkmuotoilija.domain.rivit;
 
+import pkmuotoilija.domain.*;
+
 public class YlakohtaTekstiRivi extends Rivi {
     
-    private final int ylakohdanNumero;
-    
-    public YlakohtaTekstiRivi(String rivinSisalto, int ylakohdanNumero) {
+    public YlakohtaTekstiRivi(String rivinSisalto) {
         super(rivinSisalto);
-        this.ylakohdanNumero = ylakohdanNumero;
     }
+    
+    @Override
+    public void formatoiRivi(PKtiedot tiedot) {
+        
+        hajotaRivi(false, tiedot.getLeveys(), 2 + tiedot.getYlakohdanSisennys());
+        
+    }
+    
     
 }

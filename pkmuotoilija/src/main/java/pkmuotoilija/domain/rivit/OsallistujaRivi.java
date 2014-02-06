@@ -9,9 +9,20 @@ public class OsallistujaRivi extends Rivi {
     }
     
     @Override
-    public void formatoiRivi(int leveys) {
-        this.sisalto = this.sisalto.trim();
-        hajotaRivi(true, leveys, this.sisalto.indexOf("("));
+    public void formatoiRivi(PKtiedot tiedot) {
+        this.sisalto = valiaSenMukaanOnkoAlalasna(tiedot.getOnkoAlalasna()) + this.sisalto.trim();
+        hajotaRivi(true, tiedot.getLeveys(), this.sisalto.indexOf("(") + 1);
+    }
+    
+    private String valiaSenMukaanOnkoAlalasna(boolean onkoAlalasna) {
+        
+        if(onkoAlalasna) {
+            return "    ";
+        } else {
+            return "  ";
+        }
+        
+        
     }
     
 }

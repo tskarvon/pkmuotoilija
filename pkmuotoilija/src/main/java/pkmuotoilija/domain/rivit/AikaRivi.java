@@ -9,9 +9,18 @@ public class AikaRivi extends Rivi {
     }
 
     @Override
-    public void formatoiRivi(int leveys) {
-        this.sisalto = "Aika:   " + this.sisalto.substring(this.sisalto.indexOf(" ")).trim();
-        hajotaRivi(true, leveys, 8);
+    public void formatoiRivi(PKtiedot tiedot) {
+        this.sisalto = "Aika: " + valiaJosPaikkaOn(tiedot.getOnkoPaikka()) + this.sisalto.substring(this.sisalto.indexOf(" ")).trim();
+        hajotaRivi(true, tiedot.getLeveys(), 8);
+    }
+    
+    private String valiaJosPaikkaOn(boolean onkoPaikka) {
+        if(onkoPaikka) {
+            return "  ";
+        } else {
+            return "";
+        }
+        
     }
 
 }

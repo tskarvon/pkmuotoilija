@@ -7,7 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import pkmuotoilija.domain.*;
+
 public class PaikkaRiviTest {
+    
+    PKtiedot tiedot;
 
     public PaikkaRiviTest() {
     }
@@ -22,6 +26,7 @@ public class PaikkaRiviTest {
 
     @Before
     public void setUp() {
+        tiedot = new PKtiedot();
     }
 
     @After
@@ -31,21 +36,24 @@ public class PaikkaRiviTest {
     @Test
     public void paikkaRiviPerusTesti() {
         PaikkaRivi rivi = new PaikkaRivi("Paikka: klusteri, humala, Etelä-Helsinki");
-        rivi.formatoiRivi(80);
+        tiedot.setLeveys(80);
+        rivi.formatoiRivi(tiedot);
         assertEquals("Paikka: klusteri, humala, Etelä-Helsinki", rivi.getSisalto());
     }
 
     @Test
     public void paikkaRiviPerusTurhiaValejaTesti() {
         PaikkaRivi rivi = new PaikkaRivi("Paikka:        klusteri, humala, Etelä-Helsinki      ");
-        rivi.formatoiRivi(80);
+        tiedot.setLeveys(80);
+        rivi.formatoiRivi(tiedot);
         assertEquals("Paikka: klusteri, humala, Etelä-Helsinki", rivi.getSisalto());
     }
     
     @Test
     public void paikkaRiviPitkaTesti() {
         PaikkaRivi rivi = new PaikkaRivi("PAIKKA: asfagasd agdsa fa asdaga sfa agasgasfafsabga");
-        rivi.formatoiRivi(45);
+        tiedot.setLeveys(45);
+        rivi.formatoiRivi(tiedot);
         assertEquals("Paikka: asfagasd agdsa fa asdaga sfa\n" +
 "        agasgasfafsabga", rivi.getSisalto());
         

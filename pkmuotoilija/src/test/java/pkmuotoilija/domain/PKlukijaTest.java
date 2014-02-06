@@ -14,11 +14,14 @@ import java.util.Scanner;
 
 public class PKlukijaTest {
 
+    PKtiedot tiedot;
+
     public PKlukijaTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
+
     }
 
     @AfterClass
@@ -27,6 +30,7 @@ public class PKlukijaTest {
 
     @Before
     public void setUp() {
+        tiedot = new PKtiedot();
     }
 
     @After
@@ -54,7 +58,7 @@ public class PKlukijaTest {
         assertEquals(riv.getPituus(), testaaT(scan, riv));
 
     }
-    
+
     @Test
     public void testaaPK2() throws Exception {
 

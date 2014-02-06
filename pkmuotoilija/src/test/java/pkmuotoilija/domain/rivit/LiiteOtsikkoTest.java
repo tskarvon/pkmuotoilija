@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
 
 import pkmuotoilija.domain.*;
 
-public class AlalasnaRiviTest {
+public class LiiteOtsikkoTest {
     
     PKtiedot tiedot;
     
-    public AlalasnaRiviTest() {
+    public LiiteOtsikkoTest() {
     }
     
     @BeforeClass
@@ -34,19 +34,11 @@ public class AlalasnaRiviTest {
     }
 
     @Test
-    public void alalasnaPerusTesti() {
-        AlalasnaRivi rivi = new AlalasnaRivi("Hallituksen jäsenet:");
+    public void liiteOtsikkoRiviTest() {
+        LiiteOtsikkoRivi rivi = new LiiteOtsikkoRivi("liitteet:");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Hallituksen jäsenet:", rivi.getSisalto());
-    }
-    
-    @Test
-    public void alalasnaPuutteitaTesti() {
-        AlalasnaRivi rivi = new AlalasnaRivi("hallituksen varajäsenet");
-        tiedot.setLeveys(40);
-        rivi.formatoiRivi(tiedot);
-        assertEquals("  Hallituksen varajäsenet:", rivi.getSisalto());
+        assertEquals("LIITTEET:", rivi.getSisalto());
     }
     
 }

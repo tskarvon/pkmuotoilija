@@ -1,24 +1,27 @@
 package pkmuotoilija.domain;
 
+import pkmuotoilija.domain.PKtiedot;
 import java.util.ArrayList;
 
 import pkmuotoilija.domain.rivit.*;
 
 public class RivitettyPK {
+    
+    /**
+     * Säilöö rivejä, joiden tyypit on selvitetty ja niiden tarvitsemia tietoja.
+     * 
+     * @param rivit lista, jossa rivejä säilytetään
+     * 
+     * @param tiedot tiedot, joita tarvitaan halutun muotoilun aikaansaamiseksi
+     */
 
     private final ArrayList<Rivi> rivit;
-    private final int ylakohdanSisennys;
-    private final int alakohdanSisennys;
-    private boolean onkoPaikka;
-    private boolean onkoAlalasna;
+    protected PKtiedot tiedot;
 
-    public RivitettyPK(int suurinYlakohta, int suurinAlakohta) {
+    public RivitettyPK() {
         this.rivit = new ArrayList<Rivi>();
-        this.ylakohdanSisennys = laskeSisennys(suurinYlakohta);
-        this.alakohdanSisennys = laskeSisennys(suurinAlakohta);
-        onkoPaikka = false;
-        onkoAlalasna = false;
-    }   
+        this.tiedot = new PKtiedot();
+    }
 
     public void lisaaRivi(Rivi rivi) {
         this.rivit.add(rivi);
@@ -32,30 +35,28 @@ public class RivitettyPK {
         return this.rivit.size();
     }
 
-    public void setTrueOnkoPaikka() {
-        this.onkoPaikka = true;
+    public void setTiedot(PKtiedot tiedot) {
+        this.tiedot = tiedot;
     }
-
-    public void setTrueOnkoAlalasna() {
-        this.onkoAlalasna = true;
+    
+    /**
+     * Asettaa ilmentymään liittyvän PK-tiedot-olion leveyden
+     * 
+     * @param leveys uusi leveys
+     */
+    public void setRivitetynLeveys(int leveys) {
+        this.tiedot.setLeveys(leveys);
     }
-
- /*   public void formatoiRivi(int i) {
-
-        if (getRivi(i).getClass() == AikaRivi.class) {
-            getRivi(i).formatoiRivi(this.onkoPaikka);
-        } else if (getRivi(i).getClass() == OsallistujaRivi.class) {
-            getRivi(i).formatoiRivi(this.onkoAlalasna);
-        } else {
-            getRivi(i).formatoiRivi(false, );
+    
+    /**
+     * Käy läpi kaikki sisältämänsä rivit ja kutsuu niiden muotoilumetodia
+     * formatoiRivi.
+     */
+    
+    public void formatoiRivit() {
+        for(Rivi rivi : this.rivit) {
+            rivi.formatoiRivi(this.tiedot);
         }
-
-    } */
-
-    private int laskeSisennys(int suurinKohtanumero) {
-
-        return suurinKohtanumero / 10 + 1;
-
     }
 
 }

@@ -1,5 +1,7 @@
 package pkmuotoilija.domain.rivit;
 
+import pkmuotoilija.domain.*;
+
 public class LasnaRivi extends Rivi {
     
     public LasnaRivi(String rivinSisalto) {
@@ -7,7 +9,7 @@ public class LasnaRivi extends Rivi {
     }
     
     @Override
-    public void formatoiRivi(int leveys) {
+    public void formatoiRivi(PKtiedot tiedot) {
         this.sisalto = "Läsnä:";
     }
     

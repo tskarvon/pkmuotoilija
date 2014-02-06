@@ -9,12 +9,12 @@ public class AlalasnaRivi extends Rivi {
     }
     
     @Override
-    public void formatoiRivi(int leveys) {
-        this.sisalto = this.sisalto.substring(0,1).toUpperCase() + this.sisalto.substring(1).trim();
+    public void formatoiRivi(PKtiedot tiedot) {
+        this.sisalto = this.sisalto.trim().substring(0,1).toUpperCase() + this.sisalto.substring(1).trim();
         if(!this.sisalto.substring(this.sisalto.length() - 1).equals(":")) {
             this.sisalto = this.sisalto + ":";
         }
-        hajotaRivi(false, leveys, 2);
+        hajotaRivi(false, tiedot.getLeveys(), 2);
     }
     
 }

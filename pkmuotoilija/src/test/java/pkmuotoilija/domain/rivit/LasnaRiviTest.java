@@ -7,7 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import pkmuotoilija.domain.*;
+
 public class LasnaRiviTest {
+    
+    PKtiedot tiedot;
     
     public LasnaRiviTest() {
     }
@@ -22,6 +26,7 @@ public class LasnaRiviTest {
     
     @Before
     public void setUp() {
+        tiedot = new PKtiedot();
     }
     
     @After
@@ -31,7 +36,8 @@ public class LasnaRiviTest {
     @Test
     public void lasnaTest() {
         LasnaRivi rivi = new LasnaRivi("läsnä");
-        rivi.formatoiRivi(80);
+        tiedot.setLeveys(80);
+        rivi.formatoiRivi(tiedot);
         assertEquals("Läsnä:", rivi.getSisalto());
     }
     
