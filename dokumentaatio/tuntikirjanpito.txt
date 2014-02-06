@@ -7,4 +7,5 @@ Tuntikirjanpito:
 23.1., to:	luokkakaavio, testejä, PIT					1h
 29.1., ke:	Rivi-luokan aliluokkia ja testejä, ei vielmä valmista		4h
 30.1., to:	päivitetty luokkakaavio, pit					1h
-4.2.,  ke:	Rivi-luokan aliluokkia, PKtiedot-luokka				2h
+4.2.,  ti:	Rivi-luokan aliluokkia, PKtiedot-luokka				2h
+6.2.,  to:	testejä valmiiksi, logiikka valmiihko, javadoc			5h

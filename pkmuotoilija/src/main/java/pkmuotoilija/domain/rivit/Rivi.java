@@ -3,6 +3,13 @@ package pkmuotoilija.domain.rivit;
 import pkmuotoilija.domain.*;
 
 public class Rivi {
+    
+    /**
+     * Alkuperäisen pöytäkirjan jokainen rivi tallennetaan tämän luokan tai sen
+     * aliluokkien ilmentymänä.
+     * 
+     * @param sisalto rivin sisältö
+     */
 
     protected String sisalto;
 
@@ -23,11 +30,24 @@ public class Rivi {
 
     }
     
+    /**
+     * Muotoilee rivin halutunlaiseksi. Aliluokilla on tämän ylittävät omat 
+     * metodinsa asialle.
+     * 
+     * @param tiedot tiedot, joihin perustuen muotoilu suoritetaan
+     */
     public void formatoiRivi(PKtiedot tiedot) {
         this.sisalto = this.sisalto.trim();
         hajotaRivi(false, tiedot.getLeveys(), 0);
     }
 
+    /**
+     * Hajottaa liian pitkän rivin uselle riville.
+     * 
+     * @param eiEkanRivinSisennysta halutaanko ensimmäinen rivi sisentää
+     * @param leveys hajotettavan tekstin leveys
+     * @param sis tekstin sisennys
+     */
     public void hajotaRivi(boolean eiEkanRivinSisennysta, int leveys, int sis) {
 
         if (this.sisalto.length() + sis <= leveys) {
