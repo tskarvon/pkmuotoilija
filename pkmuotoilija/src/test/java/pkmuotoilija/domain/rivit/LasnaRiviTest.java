@@ -10,25 +10,26 @@ import static org.junit.Assert.*;
 import pkmuotoilija.domain.*;
 
 public class LasnaRiviTest {
-    
+
     PKtiedot tiedot;
-    
+
     public LasnaRiviTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -38,7 +39,7 @@ public class LasnaRiviTest {
         LasnaRivi rivi = new LasnaRivi("läsnä");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Läsnä:", rivi.getSisalto());
+        assertEquals("Läsnä:\n", rivi.getSisalto());
     }
-    
+
 }

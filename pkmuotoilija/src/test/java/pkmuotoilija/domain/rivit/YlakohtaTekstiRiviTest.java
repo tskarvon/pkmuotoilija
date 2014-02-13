@@ -27,6 +27,7 @@ public class YlakohtaTekstiRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -39,7 +40,7 @@ public class YlakohtaTekstiRiviTest {
         tiedot.setLeveys(80);
         tiedot.setYlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("   Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("   Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
 
     @Test
@@ -48,17 +49,17 @@ public class YlakohtaTekstiRiviTest {
         tiedot.setLeveys(80);
         tiedot.setYlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("    Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("    Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
-/*    @Test
-    public void alakohtaTekstiRiviPidempiTesti() {
-        YlakohtaTekstiRivi rivi = new YlakohtaTekstiRivi("Tämä on lyhyt rivi. Paitsi ettei olekaan riittävän pitkä mahtuakseen yhdelle riville!");
-        tiedot.setLeveys(45);
-        tiedot.setYlakohdanSisennys(1);
-        rivi.formatoiRivi(tiedot);
-        assertEquals("   Tämä on lyhyt rivi. Paitsi ettei olekaan\n" +
-"   riittävän pitkä mahtuakseen yhdelle\n" +
-"   riville!", rivi.getSisalto());
-    } */
+    /*    @Test
+     public void alakohtaTekstiRiviPidempiTesti() {
+     YlakohtaTekstiRivi rivi = new YlakohtaTekstiRivi("Tämä on lyhyt rivi. Paitsi ettei olekaan riittävän pitkä mahtuakseen yhdelle riville!");
+     tiedot.setLeveys(45);
+     tiedot.setYlakohdanSisennys(1);
+     rivi.formatoiRivi(tiedot);
+     assertEquals("   Tämä on lyhyt rivi. Paitsi ettei olekaan\n" +
+     "   riittävän pitkä mahtuakseen yhdelle\n" +
+     "   riville!", rivi.getSisalto());
+     } */
 
 }

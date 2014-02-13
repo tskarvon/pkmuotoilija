@@ -2,16 +2,22 @@ package pkmuotoilija.domain.rivit;
 
 import pkmuotoilija.domain.*;
 
+/**
+ * Kaikki muotoiltavassa pöytäkirjassa esiintyvät rivit tallennetaan
+ * tämän luokan tai sen aliluokkien ilmentyminä.
+ * 
+ * @author tskarvon
+ */
+
 public class Rivi {
-    
-    /**
-     * Alkuperäisen pöytäkirjan jokainen rivi tallennetaan tämän luokan tai sen
-     * aliluokkien ilmentymänä.
-     * 
-     * @param sisalto rivin sisältö
-     */
 
     protected String sisalto;
+    
+    /**
+     * Tallennettavan rivin tekstisisältö.
+     * 
+     * @param rivinSisalto 
+     */
 
     public Rivi(String rivinSisalto) {
         this.sisalto = rivinSisalto;
@@ -22,13 +28,6 @@ public class Rivi {
         return this.sisalto;
 
     }    
-
-    @Override
-    public String toString() {
-
-        return this.sisalto;
-
-    }
     
     /**
      * Muotoilee rivin halutunlaiseksi. Aliluokilla on tämän ylittävät omat 
@@ -84,6 +83,28 @@ public class Rivi {
         }
 
     }
+    
+    /**
+     * Lisää rivin loppuun rivinvaihdon riippuen käyttäjän valinnoista.
+     * 
+     * @param sailytaOmaRivitys säilytetäänkö käyttäjän oma rivitys vai yliajetaanko se
+     * @return 
+     */
+    
+    protected String rivita(boolean sailytaOmaRivitys) {
+        if(!sailytaOmaRivitys) {
+            return "\n";
+        } else {
+            return "";
+        }
+    } 
+    
+    /**
+     * Lisätään haluttu määrä välilyöntejä.
+     * 
+     * @param montako lisättävien välilyöntien määrä
+     * @return 
+     */
 
     protected static String valia(int montako) {
         String vali = "";

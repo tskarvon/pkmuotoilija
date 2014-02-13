@@ -15,7 +15,7 @@ public class YlakohtaOtsikkoRivi extends Rivi {
     public void formatoiRivi(PKtiedot tiedot) {
         
         this.sisalto = this.ylakohdanNumero + "." + valia(tiedot.getYlakohdanSisennys() - this.ylakohdanNumero / 10) + 
-                this.sisalto.trim().substring(this.sisalto.trim().indexOf(" ") + 1);
+                this.sisalto.trim().substring(this.sisalto.trim().indexOf(" ") + 1) + rivita(tiedot.getSailytaOmaRivitys());;
         hajotaRivi(true, tiedot.getLeveys(), 2 + tiedot.getYlakohdanSisennys());
         
     }

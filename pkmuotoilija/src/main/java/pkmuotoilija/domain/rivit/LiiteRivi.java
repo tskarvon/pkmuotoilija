@@ -14,9 +14,15 @@ public class LiiteRivi extends Rivi {
     @Override
     public void formatoiRivi(PKtiedot tiedot) {
         
-        this.sisalto = "Liite " + this.liitenumero + ":" + valia(tiedot.getSuurinLiite() / 10 + 1 - this.liitenumero / 10) + liitteenNimi(this.sisalto);
+        this.sisalto = "Liite " + this.liitenumero + ":" + valia(tiedot.getSuurinLiite() / 10 + 1 - this.liitenumero / 10) 
+                + liitteenNimi(this.sisalto) + rivita(tiedot.getSailytaOmaRivitys());
         hajotaRivi(true, tiedot.getLeveys(), 8 + tiedot.getSuurinLiite() / 10 + 1);
         
+    }
+    
+    @Override
+    protected String rivita(boolean sailytaOmaRivitys) {
+        return "";
     }
     
     private String liitteenNimi(String liite) {

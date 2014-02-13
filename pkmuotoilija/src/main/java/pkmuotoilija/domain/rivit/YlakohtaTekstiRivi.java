@@ -10,7 +10,7 @@ public class YlakohtaTekstiRivi extends Rivi {
     
     @Override
     public void formatoiRivi(PKtiedot tiedot) {
-        
+        this.sisalto = this.sisalto + rivita(tiedot.getSailytaOmaRivitys());
         hajotaRivi(false, tiedot.getLeveys(), 2 + tiedot.getYlakohdanSisennys());
         
     }

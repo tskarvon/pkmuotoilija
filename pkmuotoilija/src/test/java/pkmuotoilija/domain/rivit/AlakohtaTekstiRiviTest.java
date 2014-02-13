@@ -27,6 +27,7 @@ public class AlakohtaTekstiRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -40,7 +41,7 @@ public class AlakohtaTekstiRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("        Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("        Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
 
     @Test
@@ -50,7 +51,7 @@ public class AlakohtaTekstiRiviTest {
         tiedot.setYlakohdanSisennys(2);
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("         Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("         Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class AlakohtaTekstiRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("         Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("         Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class AlakohtaTekstiRiviTest {
         tiedot.setYlakohdanSisennys(2);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("          Tämä on lyhyt rivi.", rivi.getSisalto());
+        assertEquals("          Tämä on lyhyt rivi.\n", rivi.getSisalto());
     }
 
     @Test
@@ -80,8 +81,8 @@ public class AlakohtaTekstiRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("        Tämä on lyhyt rivi. Paitsi ettei\n" +
-"        olekaan riittävän pitkä mahtuakseen\n" +
-"        yhdelle riville!", rivi.getSisalto());
+        assertEquals("        Tämä on lyhyt rivi. Paitsi ettei\n"
+                + "        olekaan riittävän pitkä mahtuakseen\n"
+                + "        yhdelle riville!\n", rivi.getSisalto());
     }
 }

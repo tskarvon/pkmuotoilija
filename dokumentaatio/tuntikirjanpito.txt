@@ -9,3 +9,6 @@ Tuntikirjanpito:
 30.1., to:	päivitetty luokkakaavio, pit					1h
 4.2.,  ti:	Rivi-luokan aliluokkia, PKtiedot-luokka				2h
 6.2.,  to:	testejä valmiiksi, logiikka valmiihko, javadoc			5h
+11.2., ti:	käyttöliittymän rakentelua					3h
+12.2., ke:	käyttöliittymää, kirjoitusominaisuuksien viimeistely		4h
+13.2., to:	kaaviot, testejä, dokumentaatiota, aihemäärittelyä		4h

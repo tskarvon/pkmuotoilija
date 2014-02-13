@@ -27,6 +27,7 @@ public class YlakohtaOtsikkoRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -39,7 +40,7 @@ public class YlakohtaOtsikkoRiviTest {
         tiedot.setLeveys(80);
         tiedot.setYlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("8. Plöplöplöplöp plöplö plöpl", rivi.getSisalto());
+        assertEquals("8. Plöplöplöplöp plöplö plöpl\n", rivi.getSisalto());
 
     }
 
@@ -49,7 +50,7 @@ public class YlakohtaOtsikkoRiviTest {
         tiedot.setLeveys(80);
         tiedot.setYlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("18. Plöplöplöplöp plöplö plöpl", rivi.getSisalto());
+        assertEquals("18. Plöplöplöplöp plöplö plöpl\n", rivi.getSisalto());
 
     }
 
@@ -59,7 +60,7 @@ public class YlakohtaOtsikkoRiviTest {
         tiedot.setLeveys(80);
         tiedot.setYlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("1.  Plöplöplöplöp plöplö plöpl", rivi.getSisalto());
+        assertEquals("1.  Plöplöplöplöp plöplö plöpl\n", rivi.getSisalto());
 
     }
 
@@ -70,7 +71,7 @@ public class YlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
         assertEquals("1. Plöplöplöplöp plöplö plöpl plöplö plöplöä\n"
-                + "   plöplö sgdasha", rivi.getSisalto());
+                + "   plöplö sgdasha\n", rivi.getSisalto());
 
     }
 
@@ -80,8 +81,8 @@ public class YlakohtaOtsikkoRiviTest {
         tiedot.setLeveys(45);
         tiedot.setYlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("1.  Plöplöplöplöp plöplö plöpl plöplö plöplöä\n" +
-"    plöplö sgdasha", rivi.getSisalto());
+        assertEquals("1.  Plöplöplöplöp plöplö plöpl plöplö plöplöä\n"
+                + "    plöplö sgdasha\n", rivi.getSisalto());
 
     }
 }

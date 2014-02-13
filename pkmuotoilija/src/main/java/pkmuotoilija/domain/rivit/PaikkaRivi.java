@@ -10,7 +10,7 @@ public class PaikkaRivi extends Rivi {
     
     @Override
     public void formatoiRivi(PKtiedot tiedot) {
-        this.sisalto = "Paikka: " + this.sisalto.substring(this.sisalto.indexOf(" ")).trim();
+        this.sisalto = "Paikka: " + this.sisalto.substring(this.sisalto.indexOf(" ")).trim() + rivita(tiedot.getSailytaOmaRivitys());
         hajotaRivi(true, tiedot.getLeveys(), 8);
     }
     

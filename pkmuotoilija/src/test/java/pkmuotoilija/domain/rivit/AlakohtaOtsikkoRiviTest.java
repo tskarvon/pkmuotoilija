@@ -27,6 +27,7 @@ public class AlakohtaOtsikkoRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -40,7 +41,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("   8.1. Suuri ryyppyretki", rivi.getSisalto());
+        assertEquals("   8.1. Suuri ryyppyretki\n", rivi.getSisalto());
     }
 
     @Test
@@ -50,7 +51,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(2);
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
-        assertEquals("    8.1. Suuri ryyppyretki", rivi.getSisalto());
+        assertEquals("    8.1. Suuri ryyppyretki\n", rivi.getSisalto());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(2);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("    8.1.  Suuri ryyppyretki", rivi.getSisalto());
+        assertEquals("    8.1.  Suuri ryyppyretki\n", rivi.getSisalto());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("   8.1.  Suuri ryyppyretki", rivi.getSisalto());
+        assertEquals("   8.1.  Suuri ryyppyretki\n", rivi.getSisalto());
     }
 
     @Test
@@ -81,7 +82,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setAlakohdanSisennys(1);
         rivi.formatoiRivi(tiedot);
         assertEquals("   8.1. Suuri ryyppyretki jonnekin hulluun\n"
-                + "        mestaan", rivi.getSisalto());
+                + "        mestaan\n", rivi.getSisalto());
     }
 
     @Test
@@ -92,7 +93,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
         assertEquals("    8.1.  Suuri ryyppyretki jonnekin hulluun\n"
-                + "          mestaan", rivi.getSisalto());
+                + "          mestaan\n", rivi.getSisalto());
     }
 
     @Test
@@ -102,7 +103,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("   8.10. Suuri ryyppyretki jonnekin hulluun mestaan", rivi.getSisalto());
+        assertEquals("   8.10. Suuri ryyppyretki jonnekin hulluun mestaan\n", rivi.getSisalto());
     }
 
     @Test
@@ -112,7 +113,7 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setYlakohdanSisennys(1);
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
-        assertEquals("   89.1.  Suuri ryyppyretki jonnekin hulluun mestaan", rivi.getSisalto());
+        assertEquals("   89.1.  Suuri ryyppyretki jonnekin hulluun mestaan\n", rivi.getSisalto());
     }
 
     @Test
@@ -123,6 +124,6 @@ public class AlakohtaOtsikkoRiviTest {
         tiedot.setAlakohdanSisennys(2);
         rivi.formatoiRivi(tiedot);
         assertEquals("   8.10. Suuri ryyppyretki jonnekin hulluun\n" +
-"         mestaan", rivi.getSisalto());
+"         mestaan\n", rivi.getSisalto());
     }
 }

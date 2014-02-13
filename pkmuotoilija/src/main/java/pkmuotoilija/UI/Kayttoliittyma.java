@@ -1,50 +1,164 @@
-// Metodien runko valmis, tarkka toteutus ja varsinainen käyttöliittymä puuttuu
-
 package pkmuotoilija.UI;
 
 import java.io.File;
+import java.awt.Container;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.JTextField;
+import java.awt.GridLayout;
+import javax.swing.JPanel;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JCheckBox;
 
 import pkmuotoilija.domain.*;
 
-public class Kayttoliittyma {
+/**
+ * Ohjelman käyttöliittymä.
+ * 
+ * @author tskarvon
+ */
+
+public class Kayttoliittyma implements Runnable {
+
+    private JFrame frame;
     
     /**
-     * Käyttöliittymä.
+     * Olio, johon käyttäjän antamia ja myöhemmin annetusta pöytäkirjasta
+     * määritettäviä tietoja tallennetaan.
      */
+    private final PKtiedot tiedot;
+    
 
     public Kayttoliittyma() {
+        this.tiedot = new PKtiedot();
+    }
+
+    @Override
+    public void run() {
+        frame = new JFrame("Pöytäkirjamuotoilija");
+        frame.setPreferredSize(new Dimension(600, 350));
+
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        luoKomponentit(frame.getContentPane());
+
+        frame.pack();
+        frame.setVisible(true);
     }
     
     /**
-     * Hakee käyttäjältä muokattavan pöytäkirjan sijainnin.
+     * Luodaan käyttöliittymän komponentit.
      * 
-     * @return lahdetiedosto muokattava pöytäkirja
+     * @param container 
      */
 
-    public File kysyLahdeTiedosto() {       
-        File lahdetiedosto = new File("");        
-        return lahdetiedosto;
+    private void luoKomponentit(Container container) {
+        GridLayout layout = new GridLayout(5, 2);
+        container.setLayout(layout);
+
+        JPanel valikkoPaneeli = luoRaksiValikko();
+        AccessibleContext valikko = valikkoPaneeli.getAccessibleContext();
+
+
+        JLabel leveysTeksti = new JLabel("Leveys:");
+        JTextField leveysKentta = new JTextField("80");
+        leveysKentta.setToolTipText("Leveyden tulee olla kokonaisluku väliltä 40-200.");
+        leveysTeksti.setSize(200, 20);
+
+        JPanel virhePaneeli = luoVirheKentta();
+        AccessibleContext virheet = virhePaneeli.getAccessibleContext();
+
+        Kuuntelija kuuntelija = new Kuuntelija(this.tiedot, leveysKentta, (JLabel) virheet.getAccessibleChild(0), (JLabel) virheet.getAccessibleChild(1),
+        (JCheckBox)valikko.getAccessibleChild(0), (JCheckBox)valikko.getAccessibleChild(1));
+        JButton muotoileNappi = new JButton("Muotoile!");
+        muotoileNappi.addActionListener(kuuntelija);
+
+        container.add(new JLabel("Tee valintoja:"));
+        container.add(valikkoPaneeli);
+        container.add(leveysTeksti);
+        container.add(leveysKentta);
+        container.add(new JLabel("Valitse lähdetiedosto:"));
+        container.add(luoTiedostoValikko("lähde"));
+        container.add(new JLabel("Valitse kohdetiedosto:"));
+        container.add(luoTiedostoValikko("kohde"));
+        container.add(virhePaneeli);
+        container.add(muotoileNappi);
+
     }
     
     /**
-     * Hakee käyttäjältä muokatun pöytäkirjan tallennussijainnin.
+     * Luodaan raksitettavien laatikoiden komponentit.
      * 
-     * @return kohdetiedosto muokattu pöytäkirja
+     * @return 
      */
-    
-    public File kysyKohdeTiedosto() {        
-        File kohdetiedosto = new File("");
-        return kohdetiedosto;
+
+    private JPanel luoRaksiValikko() {
+        JPanel raksiPaneeli = new JPanel(new GridLayout(2, 1));
+
+        JCheckBox hyvaksyttyKokouksessaNappi = new JCheckBox("Hyväksytty kokouksessa __/____");
+        hyvaksyttyKokouksessaNappi.setSelected(true);
+        JCheckBox sailytaOmaRivitysNappi = new JCheckBox("Säilytä oma rivitys");
+
+        raksiPaneeli.add(hyvaksyttyKokouksessaNappi);
+        raksiPaneeli.add(sailytaOmaRivitysNappi);
+
+        return raksiPaneeli;
+
     }
     
     /**
-     * Hakee käyttäjältä tekstinleveyden.
+     * Luodaan lähde- ja kohdetiedostoja kysyvien laatikoiden komponentit.
      * 
-     * @return tekstinleveys
+     * @param kumpiTiedosto onko kyse lähde- vai kohdetiedostosta
+     * @return 
      */
-    
-    public int kysyLeveys() {
-        return 80;        
+
+    private JPanel luoTiedostoValikko(String kumpiTiedosto) {
+        JPanel tiedostoPaneeli = new JPanel(new GridLayout(3, 1));
+
+        JLabel tiedostoKenttaOtsikko = new JLabel("Olet valinnut " + kumpiTiedosto + "tiedoston:");
+        JLabel tiedostoKentta = new JLabel("...");
+        tiedostoKentta.setToolTipText("...");
+        JButton valitseLahdeNappi = new JButton("Valitse " + kumpiTiedosto + "tiedosto");
+
+        TiedostoKuuntelija lahdeKuuntelija = new TiedostoKuuntelija(this.tiedot, valitseLahdeNappi, tiedostoKentta, kumpiTiedosto);
+        valitseLahdeNappi.addActionListener(lahdeKuuntelija);
+
+        tiedostoPaneeli.add(tiedostoKenttaOtsikko);
+        tiedostoPaneeli.add(tiedostoKentta);
+        tiedostoPaneeli.add(valitseLahdeNappi);
+
+        return tiedostoPaneeli;
     }
     
+    /**
+     * Luodaan virhe- ja onnistumisilmoitukset sisältävä laatikko.
+     * 
+     * @return 
+     */
+
+    private JPanel luoVirheKentta() {
+        JPanel virhePaneeli = new JPanel(new GridLayout(2, 1));
+
+        JLabel leveysVirheKentta = new JLabel("");
+        JLabel tiedostoVirheKentta = new JLabel("");
+
+        leveysVirheKentta.setForeground(Color.red);
+        tiedostoVirheKentta.setForeground(Color.red);
+
+        virhePaneeli.add(leveysVirheKentta);
+        virhePaneeli.add(tiedostoVirheKentta);
+
+        return virhePaneeli;
+
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
 }

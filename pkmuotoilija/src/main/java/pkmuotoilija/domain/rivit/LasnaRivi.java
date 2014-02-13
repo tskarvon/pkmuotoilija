@@ -10,7 +10,7 @@ public class LasnaRivi extends Rivi {
     
     @Override
     public void formatoiRivi(PKtiedot tiedot) {
-        this.sisalto = "Läsnä:";
+        this.sisalto = "Läsnä:" + rivita(tiedot.getSailytaOmaRivitys());
     }
     
 }

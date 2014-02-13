@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import pkmuotoilija.domain.*;
 
 public class PaikkaRiviTest {
-    
+
     PKtiedot tiedot;
 
     public PaikkaRiviTest() {
@@ -27,6 +27,7 @@ public class PaikkaRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -38,7 +39,7 @@ public class PaikkaRiviTest {
         PaikkaRivi rivi = new PaikkaRivi("Paikka: klusteri, humala, Etelä-Helsinki");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Paikka: klusteri, humala, Etelä-Helsinki", rivi.getSisalto());
+        assertEquals("Paikka: klusteri, humala, Etelä-Helsinki\n", rivi.getSisalto());
     }
 
     @Test
@@ -46,17 +47,17 @@ public class PaikkaRiviTest {
         PaikkaRivi rivi = new PaikkaRivi("Paikka:        klusteri, humala, Etelä-Helsinki      ");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Paikka: klusteri, humala, Etelä-Helsinki", rivi.getSisalto());
+        assertEquals("Paikka: klusteri, humala, Etelä-Helsinki\n", rivi.getSisalto());
     }
-    
+
     @Test
     public void paikkaRiviPitkaTesti() {
         PaikkaRivi rivi = new PaikkaRivi("PAIKKA: asfagasd agdsa fa asdaga sfa agasgasfafsabga");
         tiedot.setLeveys(45);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Paikka: asfagasd agdsa fa asdaga sfa\n" +
-"        agasgasfafsabga", rivi.getSisalto());
-        
+        assertEquals("Paikka: asfagasd agdsa fa asdaga sfa\n"
+                + "        agasgasfafsabga\n", rivi.getSisalto());
+
     }
 
 }

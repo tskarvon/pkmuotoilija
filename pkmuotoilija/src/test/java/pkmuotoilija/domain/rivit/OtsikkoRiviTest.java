@@ -27,6 +27,7 @@ public class OtsikkoRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -38,7 +39,7 @@ public class OtsikkoRiviTest {
         OtsikkoRivi rivi = new OtsikkoRivi("Kokouksen hallituksen kokous 1/2009");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Kokouksen hallituksen kokous 1/2009                                PÖYTÄKIRJA", rivi.getSisalto());
+        assertEquals("Kokouksen hallituksen kokous 1/2009                                PÖYTÄKIRJA\n", rivi.getSisalto());
 
     }
 
@@ -48,7 +49,7 @@ public class OtsikkoRiviTest {
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
         assertEquals("Kokouksen hallituksen kokous herran vuonna 2009 ja olkoon se myös  PÖYTÄKIRJA\n"
-                + "tämän kauden ensimmäinen kokous", rivi.getSisalto());
+                + "tämän kauden ensimmäinen kokous\n", rivi.getSisalto());
 
     }
 
@@ -57,9 +58,9 @@ public class OtsikkoRiviTest {
         OtsikkoRivi rivi = new OtsikkoRivi("Kokouksen hallituksen kokous herran vuonna 2009 ja olkoon se myös tämän kauden ensimmäinen kokous ja viimeinenkin ehkä jos herramme jumala niin meille suuressa armossa sua");
         tiedot.setLeveys(80);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Kokouksen hallituksen kokous herran vuonna 2009 ja olkoon se myös  PÖYTÄKIRJA\n" +
-"tämän kauden ensimmäinen kokous ja viimeinenkin ehkä jos herramme\n" +
-"jumala niin meille suuressa armossa sua", rivi.getSisalto());
+        assertEquals("Kokouksen hallituksen kokous herran vuonna 2009 ja olkoon se myös  PÖYTÄKIRJA\n"
+                + "tämän kauden ensimmäinen kokous ja viimeinenkin ehkä jos herramme\n"
+                + "jumala niin meille suuressa armossa sua\n", rivi.getSisalto());
 
     }
 }

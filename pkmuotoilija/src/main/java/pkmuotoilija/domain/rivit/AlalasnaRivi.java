@@ -14,6 +14,7 @@ public class AlalasnaRivi extends Rivi {
         if(!this.sisalto.substring(this.sisalto.length() - 1).equals(":")) {
             this.sisalto = this.sisalto + ":";
         }
+        this.sisalto = this.sisalto + rivita(tiedot.getSailytaOmaRivitys());
         hajotaRivi(false, tiedot.getLeveys(), 2);
     }
     

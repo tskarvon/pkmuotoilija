@@ -27,6 +27,7 @@ public class OsallistujaRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
     }
 
     @After
@@ -51,23 +52,54 @@ public class OsallistujaRiviTest {
         rivi.formatoiRivi(tiedot);
         assertEquals("  Urho Karhu", rivi.getSisalto());
     }
-    
+
     @Test
     public void ostallistujaRiviPitkaTesti1() {
         OsallistujaRivi rivi = new OsallistujaRivi("Urho Karhu (saapui kohdassa 2, poistui kohdassa 100)");
         tiedot.setLeveys(45);
         tiedot.setOnkoAlalasna(true);
         rivi.formatoiRivi(tiedot);
-        assertEquals("    Urho Karhu (saapui kohdassa 2, poistui\n" +
-"                kohdassa 100)", rivi.getSisalto());
+        assertEquals("    Urho Karhu (saapui kohdassa 2, poistui\n"
+                + "                kohdassa 100)", rivi.getSisalto());
     }
+
     @Test
     public void ostallistujaRiviPitkaTesti2() {
         OsallistujaRivi rivi = new OsallistujaRivi("Urho Karhu (saapui kohdassa 2, poistui kohdassa 100)");
         tiedot.setLeveys(45);
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Urho Karhu (saapui kohdassa 2, poistui\n" +
-"              kohdassa 100)", rivi.getSisalto());
+        assertEquals("  Urho Karhu (saapui kohdassa 2, poistui\n"
+                + "              kohdassa 100)", rivi.getSisalto());
+    }
+
+    @Test
+    public void ostallistujaRiviPJTesti() {
+        OsallistujaRivi rivi = new OsallistujaRivi("Urho Karhu (puheenjohtaja)");
+        tiedot.setLeveys(80);
+        tiedot.setOnkoAlalasna(false);
+        rivi.formatoiRivi(tiedot);
+        assertEquals("  Urho Karhu (puheenjohtaja)", rivi.getSisalto());
+        assertEquals("Urho Karhu", this.tiedot.getPJ());
+    }
+
+    @Test
+    public void ostallistujaRiviSihteeriTesti() {
+        OsallistujaRivi rivi = new OsallistujaRivi("Toni Könnilä (sihteeri)");
+        tiedot.setLeveys(80);
+        tiedot.setOnkoAlalasna(false);
+        rivi.formatoiRivi(tiedot);
+        assertEquals("  Toni Könnilä (sihteeri)", rivi.getSisalto());
+        assertEquals("Toni Könnilä", this.tiedot.getSihteeri());
+    }
+
+    @Test
+    public void ostallistujaRiviTarkastajaTesti() {
+        OsallistujaRivi rivi = new OsallistujaRivi("Toni Könnilä (pöytäkirjantarkastaja)");
+        tiedot.setLeveys(80);
+        tiedot.setOnkoAlalasna(false);
+        rivi.formatoiRivi(tiedot);
+        assertEquals("  Toni Könnilä (pöytäkirjantarkastaja)", rivi.getSisalto());
+        assertEquals("Toni Könnilä", this.tiedot.getTarkastaja(2));
     }
 }

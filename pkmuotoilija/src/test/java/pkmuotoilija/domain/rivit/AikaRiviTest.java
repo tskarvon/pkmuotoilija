@@ -32,6 +32,7 @@ public class AikaRiviTest {
     @Before
     public void setUp() {
         tiedot = new PKtiedot();
+        tiedot.setSailytaOmaRivitys(false);
 
     }
 
@@ -45,7 +46,7 @@ public class AikaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoPaikka(true);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Aika:   666. tammikuuta 1999", rivi.getSisalto());
+        assertEquals("Aika:   666. tammikuuta 1999\n", rivi.getSisalto());
     }
 
     @Test
@@ -54,7 +55,7 @@ public class AikaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoPaikka(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Aika: 666. tammikuuta 1999", rivi.getSisalto());
+        assertEquals("Aika: 666. tammikuuta 1999\n", rivi.getSisalto());
     }
 
     @Test
@@ -63,7 +64,7 @@ public class AikaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoPaikka(true);
         rivi.formatoiRivi(tiedot);
-        assertEquals("Aika:   666. tammikuuta 1999", rivi.getSisalto());
+        assertEquals("Aika:   666. tammikuuta 1999\n", rivi.getSisalto());
     }
 
     @Test
@@ -74,7 +75,7 @@ public class AikaRiviTest {
         rivi.formatoiRivi(tiedot);
         assertEquals("Aika:   666. tammikuuta herran Jeesus\n"
                 + "        Kristuksen vuonna 11254141\n"
-                + "        kahdeksan pöllöä", rivi.getSisalto());
+                + "        kahdeksan pöllöä\n", rivi.getSisalto());
 
     }
 

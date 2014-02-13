@@ -18,9 +18,9 @@ public class OtsikkoRivi extends Rivi {
             String ekaRivi = this.sisalto.substring(0, katkaisupaikka) + "  PÖYTÄKIRJA";
             this.sisalto = this.sisalto.substring(katkaisupaikka + 1);
             hajotaRivi(false, katkaisupaikka, 0);
-            this.sisalto = ekaRivi + "\n" + this.sisalto;
+            this.sisalto = ekaRivi + "\n" + this.sisalto + rivita(tiedot.getSailytaOmaRivitys());
         } else {
-            this.sisalto = this.sisalto + valia(tiedot.getLeveys() - this.sisalto.length() - 13) + "PÖYTÄKIRJA";
+            this.sisalto = this.sisalto + valia(tiedot.getLeveys() - this.sisalto.length() - 13) + "PÖYTÄKIRJA" + rivita(tiedot.getSailytaOmaRivitys());
         }
 
     }

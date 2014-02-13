@@ -50,10 +50,14 @@ public class PKlukijaTest {
     public void testaaPK1() throws Exception {
 
         File tulos = new File("src/test/java/pkmuotoilija/domain/testiPKt/testi1odotettu.txt");
+        File lahde = new File("src/test/java/pkmuotoilija/domain/testiPKt/testi1.txt");
+        PKtiedot tiedot = new PKtiedot();
+        tiedot.setLahdetiedosto(lahde);
+        
         Scanner scan = new Scanner(tulos);
-        PKlukija lukija = new PKlukija(new File("src/test/java/pkmuotoilija/domain/testiPKt/testi1.txt"));
+        PKlukija lukija = new PKlukija();
 
-        RivitettyPK riv = lukija.tunnistaRivit();
+        RivitettyPK riv = lukija.tunnistaRivit(tiedot);
 
         assertEquals(riv.getPituus(), testaaT(scan, riv));
 
@@ -63,10 +67,14 @@ public class PKlukijaTest {
     public void testaaPK2() throws Exception {
 
         File tulos = new File("src/test/java/pkmuotoilija/domain/testiPKt/testi2odotettu.txt");
+        File lahde = new File("src/test/java/pkmuotoilija/domain/testiPKt/testi2.txt");
+        PKtiedot tiedot = new PKtiedot();
+        tiedot.setLahdetiedosto(lahde);
+        
         Scanner scan = new Scanner(tulos);
-        PKlukija lukija = new PKlukija(new File("src/test/java/pkmuotoilija/domain/testiPKt/testi2.txt"));
+        PKlukija lukija = new PKlukija();
 
-        RivitettyPK riv = lukija.tunnistaRivit();
+        RivitettyPK riv = lukija.tunnistaRivit(tiedot);
 
         assertEquals(riv.getPituus(), testaaT(scan, riv));
 

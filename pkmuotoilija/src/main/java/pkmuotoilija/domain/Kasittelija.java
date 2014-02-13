@@ -1,45 +1,38 @@
 package pkmuotoilija.domain;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import pkmuotoilija.UI.*;
+/**
+ * Käynnistää tarvittavat osat logiikasta oikeassa kohdassa.
+ * 
+ * @author tskarvon
+ */
 
 public class Kasittelija {
-    
-    /**
-     * Suorittaa ohjelman.
-     * 
-     * @param kayttoliittyma kayttoliittyma
-     */
-
-    private final Kayttoliittyma kayttoliittyma;
 
     public Kasittelija() {
-        this.kayttoliittyma = new Kayttoliittyma();
 
     }
-    
+
     /**
-     * Hakee käyttöliittymältä tiedot ja kutsuu kirjoittajaa.
      * 
+     * Kuuntelija kutsuu tätä metodia saatuaan hyväksyttävät tiedot käyttäjältä
+     * käyttöliittymän kautta ja käyttäjän painettua "Muotoile"-painiketta.
+     * 
+     * @param tiedot pöytäkirjan muotoiluun liittyvät tiedot
      * @throws FileNotFoundException
      * @throws IOException 
      */
+    public void suorita(PKtiedot tiedot) throws FileNotFoundException, IOException {
 
-    public void suorita() throws FileNotFoundException, IOException {
-
-        File lahdetiedosto = this.kayttoliittyma.kysyLahdeTiedosto();
-        File kohdetiedosto = this.kayttoliittyma.kysyKohdeTiedosto();
-
-        PKlukija lukija = new PKlukija(lahdetiedosto);
-        RivitettyPK rivitetty = lukija.tunnistaRivit();
-        rivitetty.setRivitetynLeveys(kayttoliittyma.kysyLeveys());
-
-        Kirjoittaja kirjoittaja = new Kirjoittaja(kohdetiedosto, rivitetty);
-        kirjoittaja.kirjoitaValmisPK();
+        PKlukija lukija = new PKlukija();
+        RivitettyPK rivitetty = lukija.tunnistaRivit(tiedot);
+        rivitetty.formatoiRivit();
         
+        Kirjoittaja kirjoittaja = new Kirjoittaja();
+        kirjoittaja.kirjoitaValmisPK(rivitetty, tiedot);
+
     }
 
 }

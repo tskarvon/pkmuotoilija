@@ -1,26 +1,25 @@
 package pkmuotoilija.domain;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import pkmuotoilija.domain.rivit.*;
 
-public class PKlukija {
-    /**
-     * Tämän luokan tehtävänä on määrittää syötetyn pöytäkirjan kunkin rivin tyyppi.
-     * Luokka luo RivitettyPK-luokan ilmentymän, johon syötetty pöytäkirja tallennetaan rivi
-     * kerrallaan siten, että jokaisesta rivistä luodaan Rivi-luokan sopivan aliluokan ilmentymä.
-     * 
-     * Oikean aliluokan määrittämiseksi kullekin riville käytetään monimutkaista ehto-
-     * lauseiden rakennelmaa, joka perustuu viime kädessä tiettyjen avainsanojen ja 
-     * pöytäkirjan kohtien aloittavien numeroiden tunnistamiseen.
-     * 
-     * @param alkuPK alkuperäinen pöytäkirja, joka halutaan muotoilla
-     * 
-     */
+/**
+ * Luokan tehtävänä on määrittää annetun pöytäkirjan kunkin rivin tyyppi.
+ * Tyyppi selviää siitä, millaiseksi Rivi-luokan aliluokaksi kukin rivi tallennetaan.
+ * Luokka luo RivitettyPK-luokan ilmentymänä, johon nämä tallennetaan rivi kerrallaan.
+ * 
+ * Oikean aliluokan määrittämiseksi kullekin riville käytetään monimutkaista ehtolauseiden
+ * rakennelmaa, joka perustuu viime kädessä tiettyjen avainsanojen ja pöytäkirjan kohtien
+ * aloittavien numeroiden tunnistamiseen. Apuna tässä on mittava joukko totuusmuuttujia,
+ * jotka kertovat, onko jonkintyyppisiä rivejä jo tallennettu.
+ * 
+ * 
+ * @author tskarvon
+ */
 
-    private final File alkuPK;
+public class PKlukija {
 
     /**
      * Totuusarvoja, joilla pidetään, huoli, etteivät tietyt rivityypit tule
@@ -53,20 +52,20 @@ public class PKlukija {
     private int suurinYlakohta;
     private int suurinAlakohta;
     private int viimeisinAlakohta;
+    
+    /**
+     * Asetetaan kaikki totuusarvot epätosiksi ja laskurit nolliksi. Mitään
+     * rivejä ei ole tullut vastaan.
+     */
 
-    public PKlukija(File alkuperainenPK) {
+    public PKlukija() {
 
-        this.alkuPK = alkuperainenPK;
-
-        // Asetetaan kaikki epätosiksi, mikään näihin liittyvä asia ei ole tullut
-        // vielä vastaan.
         this.otsikkoOllut = false;
         this.aikaOllut = false;
         this.paikkaOllut = false;
         this.lasnaOllut = false;
         this.liitteetOllut = false;
 
-        // Samoin nämä nolliksi.
         this.ylakohta = 0;
         this.alakohta = 0;
         this.suurinYlakohta = 0;
@@ -76,26 +75,24 @@ public class PKlukija {
     }
     
     /**
-     * Metodi käy läpi PKlukijan konstruktorille annetun tekstitiedoston ja 
-     * tunnistaa sen jokaisen rivin tyypin myöhemmin tapahtuvaa rivin tyypistä
-     * riippuvaista muotoilua varten. 
+     * Metodi käy läpi tiedot-olion määrittämän tiedoston, joka sisältää alkuperäisen pöytäkirjan 
+     * ja tunnistaa sen jokaisen rivin tyypin myöhemmin tapahtuvaa rivin tyypistä
+     * riippuvaista muotoilua varten. Samalla muokataan tiedot-olion sisältöä.
      * 
      * @return RivitettyPK-luokan ilmentymä, johon alkuperäisen pöytäkirjan
-     * rivit on tallennettu tyyppitietoineen. Mukana on myös näiden muotoiluun
-     * tarvittavaa tietoa PKtiedot-luokan ilmentymässä.
+     * rivit on tallennettu tyyppitietoineen.
      */
-    public RivitettyPK tunnistaRivit() throws FileNotFoundException {
+    
+    public RivitettyPK tunnistaRivit(PKtiedot tiedot) throws FileNotFoundException {
         
-        tunnistaViimeinenKohta(new Scanner(this.alkuPK));
-        PKtiedot tiedot = new PKtiedot();
+        tunnistaViimeinenKohta(new Scanner(tiedot.getLahdetiedosto()));
         
         tiedot.setYlakohdanSisennys(this.suurinYlakohta / 10 + 1);
         tiedot.setAlakohdanSisennys(this.suurinAlakohta / 10 + 1);
         
         RivitettyPK rivitetty = new RivitettyPK();
 
-        // Käydään Scannerilla koko pöytäkirja läpi.
-        Scanner lukija = new Scanner(this.alkuPK);
+        Scanner lukija = new Scanner(tiedot.getLahdetiedosto());
         while (lukija.hasNextLine()) {
             String rivi = lukija.nextLine();
             rivitetty.lisaaRivi(maaritaLisattavaRivi(rivi));
@@ -110,9 +107,16 @@ public class PKlukija {
         return rivitetty;
 
     }
-
-    // Tämä metodi etsii viimeisen kohdan, alakohdan ja suurimman alakohdan
-    // numerot. Käytössä on oma Scanner.
+    
+    /**
+     * Metodi etsii viimeisen yläkohdan ja suurimman alakohdan numerot.
+     * Näitä tietoja tarvitaan sisennysten luomisessa ja sen varmistamisessa,
+     * että liitetiedot syötetään oikealle paikalle.
+     * 
+     * @param esilukija 
+     */
+    
+    
     private void tunnistaViimeinenKohta(Scanner esilukija) {
 
         while (esilukija.hasNextLine()) {
@@ -123,38 +127,42 @@ public class PKlukija {
             }
             if (tunnistaAlakohta(rivi, this.viimeisinAlakohta, this.suurinYlakohta)) {
                 this.viimeisinAlakohta++;
-                // Suurin alakohta ei välttämättä ole viimeisenä oleva alakohta.
                 this.suurinAlakohta = Math.max(this.suurinAlakohta, this.viimeisinAlakohta);
             }
         }
     }
+    
+    /**
+     * Metodi jakaa rivin tyypin määrittämisen kolmeen osaan.
+     * 
+     * @param rivi rivi, jonka tyyppiä ollaan määrittämässä
+     * @return oikeantyyppinen rivi
+     */
 
-    // Tämä jakaa rivin tyypin määrityksen kolmeen osaan
     private Rivi maaritaLisattavaRivi(String rivi) {
 
-        // Pelkkiä välilyöntejä sisältävät rivit voidaan luokitella suoraan
         if (rivi.trim().isEmpty()) {
             return new TyhjaRivi(rivi);
-            // Tämä if-osa koskee pöytäkirjan varsinaista sisältöosaa. Sisältöosa
-            // on tunnistettavissa siitä, että kohdilla on posiitivinen numero tai
-            // törmätään ensimmäiseen tällaiseen kohtaan.
         } else if (this.ylakohta > 0 || tunnistaYlakohta(rivi.trim(), 0)) {
             return maaritaMaareTekstiosalle(rivi);
-            // Muussa tapauksessa todetaan, että käsittelyssä ovat alkutiedot.
         } else {
             return maaritaMaareAlkutiedoille(rivi);
         }
 
     }
+    
+    /**
+     * Määrittää alkutietoihin (siis ennen varsinaisten pöytäkirjan numeroitujen
+     * kohtien alkamistA) kuuluvien rivien tyypit.
+     * 
+     * @param rivi alkutietoihin kuuluva rivi, jonka tyyppiä määritetään
+     * @return oikeantyyppinen rivi
+     */
 
-    // Määrätään alkutietoihin kuuluvien rivien tyypit.
     private Rivi maaritaMaareAlkutiedoille(String rivi) {
 
-        // Ei oteta välilyöntejä alussa tai lopussa eikä kirjainten kokoa huomioon
         String trimRivi = rivi.trim().toLowerCase();
-
-        // Seuraavien if-lauseiden järjestyksellä on merkitystä! Tämä koskee
-        // erityisesti tunnistaOsallistuja-ehtoa.
+        
         if (tunnistaOtsikko(trimRivi)) {
             this.otsikkoOllut = true;
             return new OtsikkoRivi(rivi);
@@ -177,23 +185,24 @@ public class PKlukija {
 
         } else if (tunnistaOsallistuja(trimRivi)) {
             return new OsallistujaRivi(rivi);
-            // Jos mikään ehdoista ei täyty (eli sihteeri on kirjoittanut
-            // vääränlaisen pöytäkirjan), luodaan geneerinen Rivi-olio.
         } else {
             return new Rivi(rivi);
         }
 
     }
 
-    // Määrätään sisältöosan rivien tyypit.
+    /**
+     * Määrätään varsinaiseen tekstiosaan kuuluville riveille tyypit.
+     * 
+     * @param rivi rivi, jonka tyyppiä ollaan määrittämässä
+     * @return oikeantyyppinen rivi
+     */
+    
+    
     private Rivi maaritaMaareTekstiosalle(String rivi) {
 
-        // Ei oteta välilyöntejä alussa tai lopussa eikä kirjainten kokoa huomioon
         String trimRivi = rivi.trim().toLowerCase();
 
-        // Seuraavien if-lauseiden järjestyksellä on merkitystä! tunnistaYläkohdanTeksti
-        // ja tunnistaAlakohdanTeksti -ehdot eivät voi sijaita ennen ehtoja
-        // tunnistaYlakohta ja tunnistaAlakohta.
         if (tunnistaYlakohta(trimRivi, this.ylakohta)) {
             this.ylakohta++;
             this.alakohta = 0;
@@ -216,42 +225,60 @@ public class PKlukija {
         } else if (tunnistaLiitteet()) {
             this.liitenumero++;
             return new LiiteRivi(rivi, this.liitenumero);
-            // Jos mikään ehdoista ei täyty, luodaan geneerinen Rivi-olio.
         } else {
             return new Rivi(rivi);
         }
 
     }
+    
+    /**
+     * Pitää huolen, että otsikkorivejä otetaan mukaan vain yksi.
+     * @param rivi
+     * @return 
+     */
 
-    // otsikkoOllut pitää huolen, että otsikkorivejä otetaan mukaan vain yksi.
-    // onkoOtsikko tutkii rivin sisällön.
     private boolean tunnistaOtsikko(String rivi) {
         if (!otsikkoOllut && onkoOtsikko(rivi)) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistaa aikarivin ja pitää huolen, että kokouksen ajankohdan kertovia rivejä otetaan
+     * mukaan vain yksi. 
+     * @param rivi
+     * @return 
+     */
 
-    // aikaOllut pitää huolen, että aikarivejä otetaan mukaan vain yksi.
-    // Varmistutaan, että rivin alku on oikeassa muodossa.
     private boolean tunnistaAika(String rivi) {
         if (!aikaOllut && rivi.startsWith("aika:")) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistaa kokouksen paikan kertovan rivin ja pitää huolen, että 
+     * niitä otetaan mukaan vain yksi.
+     * @param rivi
+     * @return 
+     */
 
-    // paikkaOllut pitää huolen, että paikkarivejä otetaan mukaan vain yksi.
-    // Varmistutaan, että rivin alku on oikeassa muodossa.
     private boolean tunnistaPaikka(String rivi) {
         if (!paikkaOllut && rivi.startsWith("paikka:")) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistaa kokouksen läsnäolijoista ilmoittavan rivin ja pitää huolen,
+     * että niitä otetaan mukaan vain yksi.
+     * @param rivi
+     * @return 
+     */
 
-    // lasnaOllut varmistaa, että "Läsnä:"-rivejä otetaan mukaan vain yksi.
-    // Varmistutaan, että rivin alku on oikeassa muodossa.
     private boolean tunnistaLasna(String rivi) {
         if (!lasnaOllut && rivi.startsWith("läsnä")) {
             return true;
@@ -259,41 +286,59 @@ public class PKlukija {
         return false;
 
     }
+    
+    /**
+     * Selvitetään läsnäolijoiden alaotsikot.
+     * @param rivi
+     * @return 
+     */
 
-    // Läsnäolijoiden alakategoriat tutkitaan vain, jos läsnäolijoita on ryhdytty
-    // luettelemaan (lasnaOllut). onkoAlalasna pitää huolen, että mukaan otetaan
-    // vain asiaankuuluvat rivit.
     private boolean tunnistaAlalasna(String rivi) {
         if (this.lasnaOllut && onkoAlalasna(rivi)) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan rivit, jotka kertovat kokoukseen osallistujat. Osallistujiksi
+     * luetaan kaikki läsnäolijoiden otsikon jälkeen tulevat rivit, joita ei tunnisteta 
+     * läsnäolijoiden alaotsikoiksi. Virheiden torjumiseksi varmistutaan, että
+     * rivit sisältävät välilyönnin, joka etu- ja sukunimen välissä kuuluisi olla.
+     * 
+     * @param rivi
+     * @return 
+     */
 
-    // Läsnäolijoiksi luetaan kaikki "Läsnä"-rivin jälkeen tulevat, joita ei tunnisteta
-    // läsnäolijoiden alakategorioiksi. Altis virheille, mikäli alakategorioita ei
-    // syötetä oikein. Virheitä torjuu hiukan se, että vaaditaan rivin sisältävän
-    // yhden välilyönnin kuten nimissä etu- ja sukunimen välissä kuuluu olla.
     private boolean tunnistaOsallistuja(String rivi) {
         if (this.lasnaOllut && !onkoAlalasna(rivi) && rivi.contains(" ")) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan yläkohtien otsikot. Otsikon numeron täytyy olla nykyisestä 
+     * numerosta seuraava.
+     * @param rivi
+     * @param edellinenYlakohta
+     * @return 
+     */
 
-    // Tunnistetaan kohtien otsikot. Otsikon on sisällettävä välilyönti numeron
-    // pisteen ja otsikkoteksti välissä. Tätä tietoa hyödynnetään if-lauseen
-    // kutsumissa metodeissa.
     private boolean tunnistaYlakohta(String rivi, int edellinenYlakohta) {
         if (rivi.contains(" ") && onkoYlakohta(rivi) && onkoSeuraavaYlakohta(rivi, edellinenYlakohta)) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan yläkohdan alla oleva teksti. Varmistutaan, ettei olla
+     * käsittelemässä alakohdan otsikkoriviä.
+     * @param rivi
+     * @return 
+     */
 
-    // Tunnistetaan teksti, joka on varsinaisen kohdan, ei alakohdan alla.
-    // Varmistutaan, ettei olla alakohdan tai liiteluettelon alla eikä lisäksi
-    // olla käsittelemässä alakohdan otsikkoriviä.
     private boolean tunnistaYlakohdanTeksti(String rivi) {
         if (this.alakohta == 0 && !this.liitteetOllut && !tunnistaAlakohta(rivi, this.alakohta, this.ylakohta)
                 && !tunnistaLiiteOtsikko(rivi)) {
@@ -301,10 +346,16 @@ public class PKlukija {
         }
         return false;
     }
-
-    // Tunnistetaan alakohtien otsikot. Otsikon on sisällettävä välilyönti numeron
-    // pisteen ja otsikkotekstin välissä. Tätä tietoa hyödynnetään if-lauseen
-    // kutsumissa metodeissa.
+    
+    /**
+     * Tunnistetaan alakohtien otsikkorivit. Otsikon numeron täytyy olla nykyisestä
+     * numerosta seuraava.
+     * @param rivi
+     * @param edellinenAlakohta
+     * @param edellinenYlakohta
+     * @return 
+     */
+    
     private boolean tunnistaAlakohta(String rivi, int edellinenAlakohta, int edellinenYlakohta) {
         if (rivi.contains(" ") && onkoAlakohta(rivi) && onkoSeuraavaAlakohta(rivi, edellinenAlakohta, edellinenYlakohta)) {
             return true;
@@ -312,19 +363,28 @@ public class PKlukija {
         return false;
     }
     
-    // Tunnistetaan teksti, joka on varsinaisen kohdan, ei alakohdan alla.
-    // Varmistutaan, ettei olla yläkohdan (törmättäessä yläkohdan otsikkoon
-    // alakohtien numerointi nollataan) tai liiteluettelon alla.
+    /**
+     * Tunnistetaan teksti, joka on alakohdan alla. Varmistutaan, ettei kyseessä ole
+     * yläkohdan otsikko eikä olla liiteluettelossa.
+     * @param rivi
+     * @return 
+     */
+    
     private boolean tunnistaAlakohdanTeksti(String rivi) {
         if (this.alakohta > 0 && !this.liitteetOllut) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan liiteluettelon otsikko. Varmistutaan, että kaikki
+     * ylä- ja alakohdat on käyty jo läpi. Virheet ovat mahdollisia, jos liiteotsikko
+     * esiintyy viimeisen ylä- tai alakohdan alla.
+     * @param rivi
+     * @return 
+     */
 
-    // Tunnistetaan liiteluettelon otsikko. Varmistutaan, että kaikki kohdat
-    // ja alakohdat on jo käyty läpi. Virheet mahdollisia, mikäli "liitteet"-teksti
-    // esiintyy viimeisen kohdan tai alakohdan alla.
     private boolean tunnistaLiiteOtsikko(String rivi) {
         if (!this.liitteetOllut && rivi.startsWith("liitteet")
                 && this.ylakohta == this.suurinYlakohta && this.alakohta == this.alakohta) {
@@ -332,17 +392,25 @@ public class PKlukija {
         }
         return false;
     }
+    
+    /**
+     * Liitteiksi luetaan kaikki liiteotsikko seuraavat rivit.
+     * @return 
+     */
 
-    // Liitteinä pidetään kaikkea liiteotsikkoa seuraavaa.
     private boolean tunnistaLiitteet() {
         if (this.liitteetOllut) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan otsikkorivi avainsanojen perusteella.
+     * @param rivi
+     * @return 
+     */
 
-    // tunnistaOtsikko-metodin kutsuma. Tarkastetaan, että rivi sisältää avainsanat
-    // ollakseen otsikko.
     private static boolean onkoOtsikko(String rivi) {
         if (rivi.contains("hallituksen kokous") || rivi.contains("yhdistyksen kokous")
                 || rivi.contains("sääntömääräinen kokous") || rivi.contains("järjestäytymiskokous")) {
@@ -350,9 +418,13 @@ public class PKlukija {
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan läsnäolijoiden alaotsikot avainsanojen perusteella.
+     * @param rivi
+     * @return 
+     */
 
-    // tunnistaAlalasna-metodin kutsuma. Tarkastetaan, että rivi sisältää avainsanat
-    // ollakseen läsnäolijoiden alakategorian otsikko.
     private static boolean onkoAlalasna(String rivi) {
         if (rivi.contains("hallituksen jäsenet") || rivi.contains("hallituksen varajäsenet")
                 || rivi.contains("muut") || rivi.contains("läsnäolo- ja puheoikeudella")
@@ -361,11 +433,15 @@ public class PKlukija {
         }
         return false;
     }
+    
+    /**
+     * Tunnistetaan yläkohta selvittämällä sen alun muoto ja hylätään mahdolliset
+     * alakohdalta näyttävät rivit, joita saattaa esimerkiksi tulla vastaan riveinä, jotka
+     * alkavat päivämäärällä.
+     * @param rivi
+     * @return 
+     */
 
-    // Tutkitaan, onko rivi kohdan otsikkorivi. Tarkastetaan, onko sen alku muotoa
-    // "[numero][numero]." Varmistutaan myös, että muotoa "[numero][numero].[numero][numero]."
-    // olevat ehdokkaat hylätään. Näitä saattaa tulla vastaan, jos rivinä on alakohdan
-    // otsikkorivi tai rivin aloittaa esimerkiksi päivämäärä.
     private static boolean onkoYlakohta(String rivi) {
         if (rivi.substring(0, rivi.indexOf(" ")).matches("[0-9]{1,}.")
                 && !rivi.substring(0, rivi.indexOf(" ") - 1).contains(".")) {
@@ -373,17 +449,28 @@ public class PKlukija {
         }
         return false;
     }
+    
+    /**
+     * Vastaavasti selvitetään, onko rivi alakohdan otsikkorivi.
+     * @param rivi
+     * @return 
+     */
 
-    // Tehdään ylläolevaa vastaava tarkistus alakohdan otsikkoriville.s
     private static boolean onkoAlakohta(String rivi) {
         if (rivi.substring(0, rivi.indexOf(" ")).matches("[0-9]{1,}.[0-9]{1,}.")) {
             return true;
         }
         return false;
     }
+    
+    /**
+     * Varmistutaan siitä, että yläkohdan otsikkoehdokkaan numero on nykyistä
+     * numeroa seuraava.
+     * @param rivi
+     * @param edellinenYlakohta
+     * @return 
+     */
 
-    // Tarkistetaan, että kohdan otsikkoehdokkaan numerointi on kunnossa, eli 
-    // numero on noussut yhdellä edellisestä.
     private static boolean onkoSeuraavaYlakohta(String rivi, int edellinenYlakohta) {
         if (Integer.parseInt(rivi.substring(0, rivi.indexOf(".")))
                 == edellinenYlakohta + 1) {
@@ -391,9 +478,16 @@ public class PKlukija {
         }
         return false;
     }
-
-    // Tarkistetaan, että alakohdan otsikkoehdokkaan numerointi on kunnossa, eli
-    // numero on noussut yhdellä edellisestä.
+    
+    /**
+     * Varmistutaan, että alakohdan otsikkoehdokkaan numero on nykyistä numeroa
+     * seuraava.
+     * @param rivi
+     * @param edellinenAlakohta
+     * @param edellinenYlakohta
+     * @return 
+     */
+    
     private static boolean onkoSeuraavaAlakohta(String rivi, int edellinenAlakohta, int edellinenYlakohta) {
         rivi = rivi.substring(0, rivi.indexOf(" ") - 1);
         if (Integer.parseInt(rivi.substring(rivi.indexOf(".") + 1)) == edellinenAlakohta + 1

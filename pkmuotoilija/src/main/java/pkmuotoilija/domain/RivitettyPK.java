@@ -5,31 +5,58 @@ import java.util.ArrayList;
 
 import pkmuotoilija.domain.rivit.*;
 
+/**
+ * 
+ * Luokka säilyttää ArrayListissa rivejä, joiden tyypit PKlukija on määrittänyt.
+ * Mukana kulkee myös muotoilussa tarvittava PKtiedot.
+ * 
+ * @author tskarvon
+ */
+
 public class RivitettyPK {
     
     /**
-     * Säilöö rivejä, joiden tyypit on selvitetty ja niiden tarvitsemia tietoja.
-     * 
-     * @param rivit lista, jossa rivejä säilytetään
-     * 
-     * @param tiedot tiedot, joita tarvitaan halutun muotoilun aikaansaamiseksi
-     */
-
+     * Lista pöytäkirjan riveistä.
+     */    
     private final ArrayList<Rivi> rivit;
+    
+    /**
+     * Muotoiluun tarvittavat tiedot.
+     */   
     protected PKtiedot tiedot;
+
 
     public RivitettyPK() {
         this.rivit = new ArrayList<Rivi>();
         this.tiedot = new PKtiedot();
     }
+    
+    /**
+     * Lisää uuden rivin.
+     * 
+     * @param rivi lisättävä rivi
+     */
 
     public void lisaaRivi(Rivi rivi) {
         this.rivit.add(rivi);
     }
+    
+    /**
+     * Palauttaa rivin.
+     * 
+     * @param i monesko rivi palautetaan
+     * @return i:s rivi
+     */
 
     public Rivi getRivi(int i) {
         return this.rivit.get(i);
     }
+    
+    /**
+     * Palauttaa rivien määrän.
+     * 
+     * @return rivien määrä
+     */
 
     public int getPituus() {
         return this.rivit.size();
@@ -37,15 +64,6 @@ public class RivitettyPK {
 
     public void setTiedot(PKtiedot tiedot) {
         this.tiedot = tiedot;
-    }
-    
-    /**
-     * Asettaa ilmentymään liittyvän PK-tiedot-olion leveyden
-     * 
-     * @param leveys uusi leveys
-     */
-    public void setRivitetynLeveys(int leveys) {
-        this.tiedot.setLeveys(leveys);
     }
     
     /**
