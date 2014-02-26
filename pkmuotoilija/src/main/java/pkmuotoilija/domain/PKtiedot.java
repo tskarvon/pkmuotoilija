@@ -57,7 +57,7 @@ public class PKtiedot {
      * Saadaan OsallistujaRivi-luokan ilmentymiltä formatoinnin yhteydessä.
      */
     
-    private ArrayList<String> virat;
+    private final ArrayList<String> virat;
     
     public PKtiedot() {
         
@@ -72,6 +72,25 @@ public class PKtiedot {
         this.virat = new ArrayList<String>();
         this.virat.add("");
         this.virat.add("");
+        
+    }
+    
+    public PKtiedot(File lahdeTiedosto, File kohdeTiedosto) {
+        
+        this.lahdetiedosto = lahdeTiedosto;
+        this.kohdetiedosto = kohdeTiedosto;
+        
+        this.lisaaHyvaksyttyKokouksessa = true;
+        this.sailytaOmaRivitys = false;
+        this.ylakohdanSisennys = 0;
+        this.alakohdanSisennys = 0;
+        this.suurinLiite = 0;
+        this.leveys = 80;
+        this.onkoPaikka = false;
+        this.onkoAlalasna = false;
+        this.virat = new ArrayList<String>();
+        this.virat.add("");
+        this.virat.add("");        
         
     }
     
@@ -146,8 +165,82 @@ public class PKtiedot {
      * @param tarkastaja kokouksen pöytäkirjantarkastaja
      */
     
+    /**
+     * Tarkistetaan, onko lainkaan kokousvirkoja-
+     * 
+     * @return true, jos on kokousvirkoja, false jos ei
+     */
+    
+    public boolean onkoVirkoja() {
+        if(!getPJ().isEmpty() || !getSihteeri().isEmpty() || !getVirat().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Selvitetään, kuinka monta kokousvirkailijaa on.
+     * 
+     * @return kokousvirkailijoiden määrä
+     */
+    
+    public int getVirkojenMaara() {
+        int m = 0;
+        for(int i = 0; i < this.virat.size(); i++) {
+            if(!this.virat.get(i).isEmpty()) {
+                m++;
+            }
+        }
+        return m;
+    }
+    
+    /**
+     * Palauttaa seuraavan viran indeksin
+     * 
+     * @param i viran indeksi, josta seuraavaa virkaa etsitään
+     * @return 
+     */
+    
+    public int getSeuraavaVirkailija(int i) {
+        if(i == this.virat.size() - 1) {
+            return -1;
+        }
+        
+        for(int j = i + 1; j < this.virat.size(); j++) {
+            if(!getVirkailija(j).isEmpty()) {
+                return j;
+            }
+        }
+        
+        return -1;
+    }
+    
     public void lisaaTarkastaja(String tarkastaja) {
         this.virat.add(tarkastaja);
+    }
+    
+    public String getVirkailija(int i) {
+        return this.virat.get(i);
+    }
+    
+    /**
+     * Palauttaa indeksillä i olevan viran
+     * 
+     * @param i indeksi jolta virkaa etsitään
+     * @return 
+     */
+    
+    public String getVirka(int i) {
+        if(i == 0) {
+            return "puheenjohtaja";
+        } else if(i == 1) {
+            return "sihteeri";
+        } else {
+            return "pöytäkirjantarkastaja";
+        }
+        
+        
     }
     
     public String getPJ() {

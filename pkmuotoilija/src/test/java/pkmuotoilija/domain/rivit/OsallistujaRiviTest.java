@@ -40,7 +40,7 @@ public class OsallistujaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoAlalasna(true);
         rivi.formatoiRivi(tiedot);
-        assertEquals("    Urho Karhu", rivi.getSisalto());
+        assertEquals("    Urho Karhu\n", rivi.getSisalto());
 
     }
 
@@ -50,7 +50,7 @@ public class OsallistujaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Urho Karhu", rivi.getSisalto());
+        assertEquals("  Urho Karhu\n", rivi.getSisalto());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class OsallistujaRiviTest {
         tiedot.setOnkoAlalasna(true);
         rivi.formatoiRivi(tiedot);
         assertEquals("    Urho Karhu (saapui kohdassa 2, poistui\n"
-                + "                kohdassa 100)", rivi.getSisalto());
+                   + "                kohdassa 100)\n", rivi.getSisalto());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class OsallistujaRiviTest {
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
         assertEquals("  Urho Karhu (saapui kohdassa 2, poistui\n"
-                + "              kohdassa 100)", rivi.getSisalto());
+                + "              kohdassa 100)\n", rivi.getSisalto());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class OsallistujaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Urho Karhu (puheenjohtaja)", rivi.getSisalto());
+        assertEquals("  Urho Karhu (puheenjohtaja)\n", rivi.getSisalto());
         assertEquals("Urho Karhu", this.tiedot.getPJ());
     }
 
@@ -89,7 +89,7 @@ public class OsallistujaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Toni Könnilä (sihteeri)", rivi.getSisalto());
+        assertEquals("  Toni Könnilä (sihteeri)\n", rivi.getSisalto());
         assertEquals("Toni Könnilä", this.tiedot.getSihteeri());
     }
 
@@ -99,7 +99,7 @@ public class OsallistujaRiviTest {
         tiedot.setLeveys(80);
         tiedot.setOnkoAlalasna(false);
         rivi.formatoiRivi(tiedot);
-        assertEquals("  Toni Könnilä (pöytäkirjantarkastaja)", rivi.getSisalto());
+        assertEquals("  Toni Könnilä (pöytäkirjantarkastaja)\n", rivi.getSisalto());
         assertEquals("Toni Könnilä", this.tiedot.getTarkastaja(2));
     }
 }

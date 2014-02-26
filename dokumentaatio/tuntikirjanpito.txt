@@ -12,3 +12,6 @@ Tuntikirjanpito:
 11.2., ti:	käyttöliittymän rakentelua					3h
 12.2., ke:	käyttöliittymää, kirjoitusominaisuuksien viimeistely		4h
 13.2., to:	kaaviot, testejä, dokumentaatiota, aihemäärittelyä		4h
+19.2., ke:	viimeistelyä							3h
+25.2., ti:	viimeistelyä							3h
+26.2., ke:	loppusilaus, jar						2h

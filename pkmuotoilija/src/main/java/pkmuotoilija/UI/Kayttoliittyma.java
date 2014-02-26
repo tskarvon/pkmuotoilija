@@ -1,6 +1,6 @@
 package pkmuotoilija.UI;
 
-import java.io.File;
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -14,24 +14,23 @@ import javax.swing.JPanel;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JCheckBox;
 
+
 import pkmuotoilija.domain.*;
 
 /**
  * Ohjelman käyttöliittymä.
- * 
+ *
  * @author tskarvon
  */
-
 public class Kayttoliittyma implements Runnable {
 
     private JFrame frame;
-    
+
     /**
      * Olio, johon käyttäjän antamia ja myöhemmin annetusta pöytäkirjasta
      * määritettäviä tietoja tallennetaan.
      */
     private final PKtiedot tiedot;
-    
 
     public Kayttoliittyma() {
         this.tiedot = new PKtiedot();
@@ -49,20 +48,30 @@ public class Kayttoliittyma implements Runnable {
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     /**
      * Luodaan käyttöliittymän komponentit.
+     *
+     * @param container
+     */
+    private void luoKomponentit(Container container) {
+        JButton tietoNappi = new JButton("Käyttöohjeet");
+        tietoNappi.addActionListener(new TietoKuuntelija());
+        container.add(tietoNappi, BorderLayout.NORTH);
+        container.add(luoValikot());
+    }
+    
+    /**
+     * Luodaan valintavalikot
      * 
-     * @param container 
+     * @return valikot
      */
 
-    private void luoKomponentit(Container container) {
-        GridLayout layout = new GridLayout(5, 2);
-        container.setLayout(layout);
-
+    private JPanel luoValikot() {
+        JPanel valikot = new JPanel(new GridLayout(5, 2));
+        
         JPanel valikkoPaneeli = luoRaksiValikko();
         AccessibleContext valikko = valikkoPaneeli.getAccessibleContext();
-
 
         JLabel leveysTeksti = new JLabel("Leveys:");
         JTextField leveysKentta = new JTextField("80");
@@ -73,29 +82,29 @@ public class Kayttoliittyma implements Runnable {
         AccessibleContext virheet = virhePaneeli.getAccessibleContext();
 
         Kuuntelija kuuntelija = new Kuuntelija(this.tiedot, leveysKentta, (JLabel) virheet.getAccessibleChild(0), (JLabel) virheet.getAccessibleChild(1),
-        (JCheckBox)valikko.getAccessibleChild(0), (JCheckBox)valikko.getAccessibleChild(1));
+                (JCheckBox) valikko.getAccessibleChild(0), (JCheckBox) valikko.getAccessibleChild(1));
         JButton muotoileNappi = new JButton("Muotoile!");
         muotoileNappi.addActionListener(kuuntelija);
 
-        container.add(new JLabel("Tee valintoja:"));
-        container.add(valikkoPaneeli);
-        container.add(leveysTeksti);
-        container.add(leveysKentta);
-        container.add(new JLabel("Valitse lähdetiedosto:"));
-        container.add(luoTiedostoValikko("lähde"));
-        container.add(new JLabel("Valitse kohdetiedosto:"));
-        container.add(luoTiedostoValikko("kohde"));
-        container.add(virhePaneeli);
-        container.add(muotoileNappi);
-
+        valikot.add(new JLabel("Tee valintoja:"));
+        valikot.add(valikkoPaneeli);
+        valikot.add(leveysTeksti);
+        valikot.add(leveysKentta);
+        valikot.add(new JLabel("Valitse lähdetiedosto:"));
+        valikot.add(luoTiedostoValikko("lähde"));
+        valikot.add(new JLabel("Valitse kohdetiedosto:"));
+        valikot.add(luoTiedostoValikko("kohde"));
+        valikot.add(virhePaneeli);
+        valikot.add(muotoileNappi);
+        
+        return valikot;
     }
-    
+
     /**
      * Luodaan raksitettavien laatikoiden komponentit.
-     * 
-     * @return 
+     *
+     * @return
      */
-
     private JPanel luoRaksiValikko() {
         JPanel raksiPaneeli = new JPanel(new GridLayout(2, 1));
 
@@ -109,14 +118,13 @@ public class Kayttoliittyma implements Runnable {
         return raksiPaneeli;
 
     }
-    
+
     /**
      * Luodaan lähde- ja kohdetiedostoja kysyvien laatikoiden komponentit.
-     * 
+     *
      * @param kumpiTiedosto onko kyse lähde- vai kohdetiedostosta
-     * @return 
+     * @return
      */
-
     private JPanel luoTiedostoValikko(String kumpiTiedosto) {
         JPanel tiedostoPaneeli = new JPanel(new GridLayout(3, 1));
 
@@ -134,13 +142,12 @@ public class Kayttoliittyma implements Runnable {
 
         return tiedostoPaneeli;
     }
-    
+
     /**
      * Luodaan virhe- ja onnistumisilmoitukset sisältävä laatikko.
-     * 
-     * @return 
+     *
+     * @return
      */
-
     private JPanel luoVirheKentta() {
         JPanel virhePaneeli = new JPanel(new GridLayout(2, 1));
 

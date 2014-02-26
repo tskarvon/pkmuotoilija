@@ -12,14 +12,17 @@ Muotoillut pöytäkirjat tallennetaan muotoilut sisältävään tekstitiedostoon
 
 Käyttäjällä on seuraavat toiminnot:
 
+- käyttöohjeiden lukeminen
 - pöytäkirjan muotoilu oletusasetuksilla
 - muotoilun asetusten muuttaminen:
-  - leveyden säätäminen (oletus 80 merkkiä, oltava vähintään 40 merkkiä)
+  - leveyden säätäminen (oletus 80 merkkiä, oltava vähintään 60 merkkiä)
   - oman rivityksen käyttämisen säätäminen
   - "Hyväksytty kokouksessa __/____" -tekstin mukaan ottaminen tai pois jättäminen
 - lähde- ja kohdetiedostojen valinta
 
 Esimerkki ohjelmalle annetusta pöytäkirjasta ja mahdollisesta muotoillusta lopputuloksesta tiedostossa pkEsimerkki.txt.
+
+Tiedostoissa esimPK1.txt ja esimPK2.txt on valmiit pöytäkirjat, joiden avulla ohjelmaa voi kokeilla.
 
 ------------
 

@@ -13,13 +13,9 @@ public class OsallistujaRivi extends Rivi {
 
         tunnistaVirka(tiedot);
 
-        this.sisalto = valiaSenMukaanOnkoAlalasna(tiedot.getOnkoAlalasna()) + this.sisalto.trim() + rivita(tiedot.getSailytaOmaRivitys());;
+        this.sisalto = valiaSenMukaanOnkoAlalasna(tiedot.getOnkoAlalasna()) + this.sisalto.trim();
         hajotaRivi(true, tiedot.getLeveys(), this.sisalto.indexOf("(") + 1);
-    }
-
-    @Override
-    protected String rivita(boolean sailytaOmaRivitys) {
-        return "";
+        this.sisalto += rivita(tiedot.getSailytaOmaRivitys());
     }
     
     /**

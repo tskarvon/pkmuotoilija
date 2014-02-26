@@ -97,7 +97,7 @@ public class Rivi {
         } else {
             return "";
         }
-    } 
+    }
     
     /**
      * Lisätään haluttu määrä välilyöntejä.
