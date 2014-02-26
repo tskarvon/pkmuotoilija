@@ -1,2 +1,0 @@
-   Tämä on lyhyt rivi. Paitsi ettei olekaan
-   riittävän pitkä mahtuakseen yhdelle riville!
